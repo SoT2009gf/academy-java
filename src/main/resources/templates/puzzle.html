@@ -3,6 +3,10 @@
 <head>
 <title>Puzzle</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 </head>
 <body>
 	<h1>
@@ -22,7 +26,8 @@
 	<br />
 
 	<div th:if="${@puzzleController.solved}">
-		You've solved the puzzle!<br /> <img src="/img/puzzle/puzzle.jpg" alt="Complete puzzle image."/>
+		You've solved the puzzle!<br /> <img src="/img/puzzle/puzzle.jpg"
+			alt="Complete puzzle image." />
 	</div>
 
 	<div th:if="${not @puzzleController.solved}">
@@ -31,9 +36,8 @@
 
 	<h3>Top scores</h3>
 	<ol>
-		<li th:each="score : ${@puzzleController.scores}"> 
-		<span th:text="${score.userName}"></span> 
-		<span th:text="${score.value}"></span>
+		<li th:each="score : ${@puzzleController.scores}"><span
+			th:text="${score.userName}"></span> <span th:text="${score.value}"></span>
 		</li>
 	</ol>
 </body>

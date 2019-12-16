@@ -1,0 +1,21 @@
+h1 {
+	text-align: center;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: blue;
+}
+
+.pull-right {
+	float: right;
+}
+
+.login-input {
+	float: right;
+}

@@ -6,6 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Score {
+	
 	@Id
 	@GeneratedValue
 	private int ident;
@@ -16,8 +17,7 @@ public class Score {
 
 	private int value;
 
-	public Score() {
-	}
+	public Score() {}
 
 	public Score(String userName, String game, int value) {
 		this.userName = userName;
@@ -27,10 +27,6 @@ public class Score {
 
 	public int getIdent() {
 		return ident;
-	}
-
-	public void setIdent(int ident) {
-		this.ident = ident;
 	}
 
 	public String getUserName() {

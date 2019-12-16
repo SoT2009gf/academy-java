@@ -15,8 +15,7 @@ public class Player {
 
 	private String passwd;
 
-	public Player() {
-	}
+	public Player() {}
 
 	public Player(String name, String passwd) {
 		this.name = name;
@@ -25,10 +24,6 @@ public class Player {
 
 	public int getIdent() {
 		return ident;
-	}
-
-	public void setIdent(int ident) {
-		this.ident = ident;
 	}
 
 	public String getName() {

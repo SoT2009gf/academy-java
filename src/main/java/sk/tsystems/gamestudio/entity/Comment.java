@@ -6,6 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Comment {
+	
 	@Id
 	@GeneratedValue
 	private int ident;
@@ -16,8 +17,7 @@ public class Comment {
 
 	private String content;
 
-	public Comment() {
-	}
+	public Comment() {}
 
 	public Comment(String username, String game, String content) {
 		this.username = username;
@@ -27,10 +27,6 @@ public class Comment {
 
 	public int getIdent() {
 		return ident;
-	}
-
-	public void setIdent(int ident) {
-		this.ident = ident;
 	}
 
 	public String getUsername() {

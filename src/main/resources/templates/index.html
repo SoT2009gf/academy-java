@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<meta charset="utf-8">
 <title>Gamestudio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-	<h1>Welcome to Game studio!</h1>
-	
-	Our favorite games:<br/>
-	<a href="/puzzle">Puzzle</a><br/>
-	<a href="/minesweeper">Minesweeper</a><br/>
-	
-	<div th:if="${not @mainController.logged}">	
-	Please login<br/>
-		<form action="/login">
-			<label>Login: <input type="text" name="name"/></label><br/>
-			<label>Password: <input type="password" name="passwd"/></label><br/>
-			<input type="submit" value="Login"/>
-		</form>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Welcome to Game studio!</h1>
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-12">
+				<div th:if="${not @mainController.logged}">
+						<p class="pull-right">Not logged in?</p>
+						<form action="/login">
+							<label class="pull-right">Username: <input type="text" name="name" /></label><br />
+							<label class="pull-right">Password: <input type="password" name="passwd" /></label><br />
+							<input class="login-input" type="submit" value="Login"/>
+						</form>
+				</div>
+				<div th:if="${@mainController.logged}">
+					You are logged as <span
+						th:text="${@mainController.loggedPlayer.name}"></span> <a
+						href="/logout">Logout</a><br />
+				</div>
+			</div>
+
+
+			<div class="col-md-8 col-12">
+				<a href="/puzzle">Puzzle</a> <br /> <a href="/minesweeper">Minesweeper</a><br />
+			</div>
+		</div>
 	</div>
-	<div th:if="${@mainController.logged}">
-		You are logged as <span th:text="${@mainController.loggedPlayer.name}"></span>
-		<a href="/logout">Logout</a><br/>
-	</div>
-	
 </body>
 </html>
