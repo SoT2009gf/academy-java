@@ -1,0 +1,1 @@
+Projects 15Puzzle and Minesweeper are included in project gamestudio.

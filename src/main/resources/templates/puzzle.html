@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>Puzzle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>
+		<a href="/">Gamestudio</a>
+	</h1>
+	<h2>Puzzle</h2>
+
+	<div th:if="${not @mainController.logged}">
+		You are not logged. Please <a href="/">log in</a>.
+	</div>
+
+	<div th:if="${@mainController.logged}">
+		You are logged as <span th:text="${@mainController.loggedPlayer.name}"></span><br />
+	</div>
+
+	<a href="/puzzle">New game</a>
+	<br />
+
+	<div th:if="${@puzzleController.solved}">
+		You've solved the puzzle!<br /> <img src="/img/puzzle/puzzle.jpg" alt="Complete puzzle image."/>
+	</div>
+
+	<div th:if="${not @puzzleController.solved}">
+		<div th:utext="${@puzzleController.htmlField}"></div>
+	</div>
+
+	<h3>Top scores</h3>
+	<ol>
+		<li th:each="score : ${@puzzleController.scores}"> 
+		<span th:text="${score.userName}"></span> 
+		<span th:text="${score.value}"></span>
+		</li>
+	</ol>
+</body>
+</html>
