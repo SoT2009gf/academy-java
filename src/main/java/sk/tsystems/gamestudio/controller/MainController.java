@@ -14,11 +14,11 @@ import sk.tsystems.gamestudio.service.PlayerService;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 @RequestMapping("/")
 public class MainController {
-	
+
 	private Player loggedPlayer;
-	
+
 	private boolean registerFormVisible;
-	
+
 	@Autowired
 	private PlayerService playerService;
 
@@ -29,33 +29,36 @@ public class MainController {
 
 	@RequestMapping("/registerform")
 	public String registerForm() {
-		registerFormVisible = !registerFormVisible;		
+		registerFormVisible = !registerFormVisible;
 		return "redirect:/";
 	}
 
 	@RequestMapping("/registernewplayer")
 	public String registerNewPlayer(String userName, String passwd) {
-		if(playerService.getPlayer(userName) == null) {
+		if (playerService.getPlayer(userName) == null) {
 			Player player = new Player(userName, passwd);
 			playerService.addPlayer(player);
 			loggedPlayer = player;
 		}
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping("/login")
-	public String login(Player player) {
-		if (player.getPasswd().equals(playerService.getPlayer(player.getName()).getPasswd())) {
-			loggedPlayer = player;
+	public String login(String name, String passwd) {
+		Player player = playerService.getPlayer(name);
+		if (player != null) {
+			if (player.getPasswd().equals(passwd)) {
+				loggedPlayer = player;
+			}
 		}
-		
 		return "redirect:/";
 	}
 
 	@RequestMapping("/logout")
 	public String logout() {
 		loggedPlayer = null;
-		
+		registerFormVisible = false;
+
 		return "redirect:/";
 	}
 
@@ -66,7 +69,7 @@ public class MainController {
 	public Player getLoggedPlayer() {
 		return loggedPlayer;
 	}
-	
+
 	public boolean isRegisterFormVisible() {
 		return registerFormVisible;
 	}
