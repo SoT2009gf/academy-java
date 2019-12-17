@@ -1,5 +1,6 @@
 package sk.tsystems.gamestudio.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import org.springframework.stereotype.Controller;
@@ -7,30 +8,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import sk.tsystems.gamestudio.entity.Player;
+import sk.tsystems.gamestudio.service.PlayerService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
+@RequestMapping("/")
 public class MainController {
 	
 	private Player loggedPlayer;
+	
+	private boolean registerFormVisible;
+	
+	@Autowired
+	private PlayerService playerService;
 
-	@RequestMapping("/")
+	@RequestMapping
 	public String index() {
 		return "index";
 	}
 
-	@RequestMapping("/login")
-	public String login(Player player) {
-		if ("heslo".equals(player.getPasswd())) {
+	@RequestMapping("/registerform")
+	public String registerForm() {
+		registerFormVisible = !registerFormVisible;		
+		return "redirect:/";
+	}
+
+	@RequestMapping("/registernewplayer")
+	public String registerNewPlayer(String userName, String passwd) {
+		if(playerService.getPlayer(userName) == null) {
+			Player player = new Player(userName, passwd);
+			playerService.addPlayer(player);
 			loggedPlayer = player;
 		}
-
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/login")
+	public String login(Player player) {
+		if (player.getPasswd().equals(playerService.getPlayer(player.getName()).getPasswd())) {
+			loggedPlayer = player;
+		}
+		
 		return "redirect:/";
 	}
 
 	@RequestMapping("/logout")
 	public String logout() {
 		loggedPlayer = null;
+		
 		return "redirect:/";
 	}
 
@@ -40,5 +65,9 @@ public class MainController {
 
 	public Player getLoggedPlayer() {
 		return loggedPlayer;
+	}
+	
+	public boolean isRegisterFormVisible() {
+		return registerFormVisible;
 	}
 }

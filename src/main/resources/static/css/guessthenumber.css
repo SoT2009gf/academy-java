@@ -2,6 +2,11 @@ h1 {
 	text-align: center;
 }
 
+h2 {
+	text-align: center;
+	margin-top: 0.5em;
+}
+
 a, a:visited {
 	text-decoration: none;
 	color: black;
@@ -9,23 +14,12 @@ a, a:visited {
 
 a:hover {
 	text-decoration: none;
-	color: #007bff;
+	color: #007bff;	
 }
 
 a.button {
-    margin-left: 9em;
+ 	display: block;
+	text-align: center; 
     text-decoration: none;
     color: initial;
-}
-
-.register-top {
-	margin-top: 1em;
-}
-
-.clear {
-	clear: both;
-}
-
-.create {
-	margin-left: 10.9em;
 }

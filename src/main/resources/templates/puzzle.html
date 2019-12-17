@@ -19,7 +19,7 @@
 	</div>
 
 	<div th:if="${@mainController.logged}">
-		You are logged as <span th:text="${@mainController.loggedPlayer.name}"></span><br />
+		You are logged as <span th:text="${@mainController.loggedPlayer.name}"><a href="/">Log out</a></span><br />
 	</div>
 
 	<a href="/puzzle">New game</a>

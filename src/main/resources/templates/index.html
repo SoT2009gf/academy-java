@@ -21,12 +21,32 @@
 		<div class="row">
 			<div class="col-md-4 col-12">
 				<div th:if="${not @mainController.logged}">
-						<p class="pull-right">Not logged in?</p>
-						<form action="/login">
-							<label class="pull-right">Username: <input type="text" name="name" /></label><br />
-							<label class="pull-right">Password: <input type="password" name="passwd" /></label><br />
-							<input class="login-input" type="submit" value="Login"/>
+					<p class="float-right">Not logged in?</p>
+					<form action="/login">
+						<div>
+							<label class="float-right">Username: <input type="text"
+								name="name" /></label> <label class="float-right">Password: <input
+								type="password" name="passwd" /></label>
+						</div>
+						<div class="float-left">
+							<a href="/registerform" class="button"><button type="button">Register</button></a>
+						</div>
+						<div class="float-right">
+							<button type="submit">Login</button>
+						</div>
+					</form>
+					<div th:if="${@mainController.registerFormVisible}">
+						<form action="/registernewplayer">
+							<div class="float-right">
+								<label class="float-right register-top">New username: <input type="text"
+									name="userName" /></label> <label class="float-right">Password: <input
+									type="password" name="passwd" /></label>
+							</div>
+							<div class="clear">
+								<button type="submit" class="create">Create new player</button>
+							</div>
 						</form>
+					</div>
 				</div>
 				<div th:if="${@mainController.logged}">
 					You are logged as <span
@@ -34,10 +54,10 @@
 						href="/logout">Logout</a><br />
 				</div>
 			</div>
-
-
 			<div class="col-md-8 col-12">
-				<a href="/puzzle">Puzzle</a> <br /> <a href="/minesweeper">Minesweeper</a><br />
+				<a href="/guessthenumber">Guess the number</a><br />
+				<a href="/puzzle">Puzzle</a><br />
+				<a href="/minesweeper">Minesweeper</a>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>Guess the number</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/guessthenumber.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<header>
+					<h1>
+						<a href="/">Gamestudio</a>
+					</h1>
+					<h2>Guess the number</h2>
+				</header>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 col-12">
+				<aside>
+					<h4>Current player:</h4>
+					<div th:if="${not @mainController.logged}">
+						You are not logged. Please <a href="/">log in</a>.
+					</div>
+					<div th:if="${@mainController.logged}">
+						You are logged as <span
+							th:text="${@mainController.loggedPlayer.name}"></span> <a
+							href="/logout">Log out</a>
+					</div>
+				</aside>
+			</div>
+			<div class="col-md-6 col-12">
+				<main>
+					<div th:if="${not @guessTheNumberController.solved}">
+						<p>I think of the number... Guess which one.</p>
+						<form action="/guessthenumber/guess">
+							<label>I'm guessing it's the number: <input type="text"
+								name="guessedNumber" autofocus></input></label>
+							<button type="submit">Guess</button>
+						</form>
+						<span th:text="${@guessTheNumberController.message}"></span>
+						<p>Try again.</p>
+					</div>
+					<div th:if="${@guessTheNumberController.solved}">
+						<p>Congratulations, You guessed right.</p>
+						<span th:text="${@guessTheNumberController.message}"></span> <a
+							href="/guessthenumber" class="button"><button type="button">Play
+								again</button></a>
+					</div>
+				</main>
+			</div>
+			<div class="col-md-4 col-12">
+				<aside>
+					<h4>Top scores</h4>
+					<ol>
+						<li th:each="score : ${@guessTheNumberController.scores}"><span
+							th:text="${score.userName}"></span> <span
+							th:text="${score.value}"></span></li>
+					</ol>
+				</aside>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer> </footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

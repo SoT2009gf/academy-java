@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Score {
+public class GameRating {
 	
 	@Id
 	@GeneratedValue
@@ -14,15 +14,15 @@ public class Score {
 	private String userName;
 
 	private String game;
+	
+	private int rating;
 
-	private int value;
+	public GameRating() {}
 
-	public Score() {}
-
-	public Score(String userName, String game, int value) {
+	public GameRating(String userName, String game, int rating) {
 		this.userName = userName;
 		this.game = game;
-		this.value = value;
+		this.rating = rating;
 	}
 
 	public int getIdent() {
@@ -37,7 +37,7 @@ public class Score {
 		return game;
 	}
 
-	public int getValue() {
-		return value;
+	public int getRating() {
+		return rating;
 	}
 }

@@ -11,45 +11,33 @@ public class Comment {
 	@GeneratedValue
 	private int ident;
 
-	private String username;
+	private String userName;
 
 	private String game;
 
-	private String content;
+	private String comment;
 
 	public Comment() {}
 
-	public Comment(String username, String game, String content) {
-		this.username = username;
+	public Comment(String userName, String game, String comment) {
+		this.userName = userName;
 		this.game = game;
-		this.content = content;
+		this.comment = comment;
 	}
 
 	public int getIdent() {
 		return ident;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public String getUserName() {
+		return userName;
 	}
 
 	public String getGame() {
 		return game;
 	}
 
-	public void setGame(String game) {
-		this.game = game;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public String getComment() {
+		return comment;
 	}
 }
