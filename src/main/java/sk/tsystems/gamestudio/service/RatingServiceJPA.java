@@ -26,7 +26,7 @@ public class RatingServiceJPA implements RatingService {
 	public double getRating(String game) {
 		Object result;
 
-		result = entityManager.createQuery("select avg(g.rating) from GameRating g where g.game = :game")
+		result = entityManager.createQuery("select trunc(avg(g.rating), 1) from GameRating g where g.game = :game")
 				.setParameter("game", game).getSingleResult();
 
 		return result == null ? -1.0 : ((Double) result).doubleValue();

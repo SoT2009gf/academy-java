@@ -1,7 +1,6 @@
 package sk.tsystems.gamestudio.controller;
 
 import java.util.Formatter;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.game.puzzle.core.Field;
 import sk.tsystems.gamestudio.game.puzzle.core.Tile;
+import sk.tsystems.gamestudio.service.CommentService;
+import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
@@ -21,9 +23,17 @@ import sk.tsystems.gamestudio.service.ScoreService;
 public class PuzzleController {
 
 	private Field field;
+	
+	private long startMillis;
 
 	@Autowired
 	private ScoreService scoreService;
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private RatingService ratingService;
 
 	@Autowired
 	private MainController mainController;
@@ -31,6 +41,7 @@ public class PuzzleController {
 	@RequestMapping
 	public String index() {
 		field = new Field(4, 4);
+		startMillis = System.currentTimeMillis();
 		return "puzzle";
 	}
 
@@ -39,8 +50,8 @@ public class PuzzleController {
 		if (!field.isSolved()) {
 			field.move(tile);
 			if (field.isSolved() && mainController.isLogged()) {
-				Score score = new Score(mainController.getLoggedPlayer().getName(), "puzzle", field.getScore());
-				scoreService.addScore(score);
+				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "puzzle",
+						(int)(field.getRowCount() * field.getColumnCount() * 19 - getPlayingSeconds())));
 			}
 		}
 		return "puzzle";
@@ -49,22 +60,20 @@ public class PuzzleController {
 	public String getHtmlField() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
-		formatter.format("<table>\n");
 		for (int row = 0; row < field.getRowCount(); row++) {
-			formatter.format("<tr>\n");
+			formatter.format("<div class='puzzle-row'>\n");
 			for (int column = 0; column < field.getColumnCount(); column++) {
-				formatter.format("<td>\n");
+				formatter.format("<div class='puzzle-column'>\n");
 				Tile tile = field.getTile(row, column);
 				if (tile != null) {
 					formatter.format(
 							"<a href='/puzzle/move?tile=%d'><img src='/img/puzzle/img%d.jpg' alt='Puzzle piece number %d.'/></a>",
 							tile.getValue(), tile.getValue(), tile.getValue());
 				}
-				formatter.format("</td>\n");
+				formatter.format("</div>\n");
 			}
-			formatter.format("</tr>\n");
+			formatter.format("</div>\n");
 		}
-		formatter.format("</table>\n");
 		return formatter.toString();
 	}
 
@@ -72,7 +81,20 @@ public class PuzzleController {
 		return field.isSolved();
 	}
 
+	private long getPlayingSeconds() {
+		return (System.currentTimeMillis() - startMillis) / 1000;
+	}
+	
 	public List<Score> getScores() {
 		return scoreService.getTopScores("puzzle");
 	}
+
+	public List<Comment> getComments() {
+		return commentService.getComments("puzzle");
+	}
+
+	public double getRating() {
+		return ratingService.getRating("puzzle");
+	}
+
 }

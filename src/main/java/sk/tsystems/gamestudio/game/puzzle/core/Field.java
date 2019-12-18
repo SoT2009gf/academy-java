@@ -94,8 +94,4 @@ public class Field {
 			move(rng.nextInt(rowCount * columnCount - 1) + 1);
 		}
 	}
-	
-	public int getScore() {
-		return new Random().nextInt(100);
-	}
 }

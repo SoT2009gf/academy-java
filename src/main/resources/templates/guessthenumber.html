@@ -17,7 +17,9 @@
 					<h1>
 						<a href="/">Gamestudio</a>
 					</h1>
-					<h2>Guess the number</h2>
+					<h2>
+						<a href="/guessthenumber">Guess the Number</a>
+					</h2>
 				</header>
 			</div>
 		</div>
@@ -44,24 +46,24 @@
 								name="guessedNumber" autofocus></input></label>
 							<button type="submit">Guess</button>
 						</form>
-						<span th:utext="${@guessTheNumberController.guessedNumber} != null ? ${@guessTheNumberController.message}: ''"></span>
+						<span
+							th:utext="${@guessTheNumberController.guessedNumber} != null ? ${@guessTheNumberController.message}: ''"></span>
 					</div>
 					<div th:if="${@guessTheNumberController.solved}">
 						<p>Congratulations, You guessed right.</p>
-						<span th:text="${@guessTheNumberController.message}"></span> <a
-							href="/guessthenumber" class="button"><button type="button">Play
-								again</button></a>
+						<span th:text="${@guessTheNumberController.message}"></span>
 					</div>
 
 
 					<div th:if="${@mainController.logged}">
 						<form action="/addcomment" method="post">
 							<input type="hidden" name="game" value="guessthenumber"></input>
-							<label>Add comment:<textarea name="content" rows="3"
-									cols="33"></textarea></label>
+							<label>Add comment (255 chars max):<textarea
+									name="content" rows="3" cols="33"></textarea></label>
 							<button type=submit>Submit</button>
 						</form>
 					</div>
+					<p>Comments:</p>
 					<ul>
 						<li th:each="comment : ${@guessTheNumberController.comments}"><span
 							th:text="${comment.content}"></span> <span
@@ -86,8 +88,7 @@
 					<div th:unless="${@guessTheNumberController.rating > 0}">
 						<span>Not rated yet</span>
 					</div>
-					<div
-						th:if="${@mainController.logged}">
+					<div th:if="${@mainController.logged}">
 						<form action="/addrating" method="post">
 							<input type="hidden" name="game" value="guessthenumber"></input>
 							<label>Your rating:<select name="rating">

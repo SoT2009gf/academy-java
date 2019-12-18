@@ -1,44 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<title>Puzzle</title>
+<title>Guess the number</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/puzzle.css" />
 </head>
 <body>
-	<h1>
-		<a href="/">Gamestudio</a>
-	</h1>
-	<h2>Puzzle</h2>
-
-	<div th:if="${not @mainController.logged}">
-		You are not logged. Please <a href="/">log in</a>.
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<header>
+					<h1>
+						<a href="/">Gamestudio</a>
+					</h1>
+					<h2>
+						<a href="/puzzle">Puzzle</a>
+					</h2>
+				</header>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 col-12">
+				<aside>
+					<h4>Current player:</h4>
+					<div th:if="${not @mainController.logged}">
+						You are not logged. Please <a href="/">log in</a>.
+					</div>
+					<div th:if="${@mainController.logged}">
+						You are logged as <span
+							th:text="${@mainController.loggedPlayer.name}"></span> <a
+							href="/logout">Log out</a>
+					</div>
+				</aside>
+			</div>
+			<div class="col-md-6 col-12">
+				<main>
+					<div th:if="${not @puzzleController.solved}">
+						<div th:utext="${@puzzleController.HtmlField}"></div>
+					</div>
+					<div th:unless="${not @puzzleController.solved}">
+						<img src="/img/puzzle/puzzle.jpg" alt="Solved puzzle image." />
+						<p>Congratulations, You solved the puzzle.</p>
+					</div>
+					<div th:if="${@mainController.logged}">
+						<form action="/addcomment" method="post">
+							<input type="hidden" name="game" value="puzzle"></input> <label>Add
+								comment (255 chars max):<textarea name="content" rows="3"
+									cols="33"></textarea>
+							</label>
+							<button type=submit>Submit</button>
+						</form>
+					</div>
+					<p>Comments:</p>
+					<ul>
+						<li th:each="comment : ${@puzzleController.comments}"><span
+							th:text="${comment.content}"></span> <span
+							th:text="${comment.userName}"></span></li>
+					</ul>
+				</main>
+			</div>
+			<div class="col-md-4 col-12">
+				<aside>
+					<h4>Top scores</h4>
+					<ol>
+						<li th:each="score : ${@puzzleController.scores}"><span
+							th:text="${score.userName}"></span> <span
+							th:text="${score.value}"></span></li>
+					</ol>
+				</aside>
+				<aside>
+					<h4>Game Rating</h4>
+					<div th:if="${@puzzleController.rating > 0}">
+						<span th:text="${@puzzleController.rating}"></span>
+					</div>
+					<div th:unless="${@puzzleController.rating > 0}">
+						<span>Not rated yet</span>
+					</div>
+					<div th:if="${@mainController.logged}">
+						<form action="/addrating" method="post">
+							<input type="hidden" name="game" value="puzzle"></input> <label>Your
+								rating:<select name="rating">
+									<option value="">Please choose</option>
+									<option value="1">It's terrible</option>
+									<option value="2">I don't like it</option>
+									<option value="3">Can't decide</option>
+									<option value="4">I like it</option>
+									<option value="5">I like it very much</option>
+							</select>
+							</label>
+							<button type=submit>Submit</button>
+						</form>
+					</div>
+				</aside>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer> </footer>
+			</div>
+		</div>
 	</div>
-
-	<div th:if="${@mainController.logged}">
-		You are logged as <span th:text="${@mainController.loggedPlayer.name}"><a href="/">Log out</a></span><br />
-	</div>
-
-	<a href="/puzzle">New game</a>
-	<br />
-
-	<div th:if="${@puzzleController.solved}">
-		You've solved the puzzle!<br /> <img src="/img/puzzle/puzzle.jpg"
-			alt="Complete puzzle image." />
-	</div>
-
-	<div th:if="${not @puzzleController.solved}">
-		<div th:utext="${@puzzleController.htmlField}"></div>
-	</div>
-
-	<h3>Top scores</h3>
-	<ol>
-		<li th:each="score : ${@puzzleController.scores}"><span
-			th:text="${score.userName}"></span> <span th:text="${score.value}"></span>
-		</li>
-	</ol>
 </body>
 </html>

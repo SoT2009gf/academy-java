@@ -1,8 +1,44 @@
-body {
+h1 {
 	text-align: center;
 }
 
-table {
-	border-collapse: collapse;
-	margin: auto;
+h2 {
+	text-align: center;
+	margin-top: 0.5em;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #007bff;
+}
+
+a.button {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: initial;
+}
+
+.puzzle-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.puzzle-column {
+	display: flex;
+	flex-direction: column;
+	width: 8em
+}
+
+img {
+	max-width: 100%;
+}
+
+textarea {
+	max-width: 77%;
 }
