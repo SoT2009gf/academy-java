@@ -22,7 +22,7 @@
 			<div class="col-md-4 col-12">
 				<div th:if="${not @mainController.logged}">
 					<p class="float-right">Not logged in?</p>
-					<form action="/login">
+					<form action="/login" method="post">
 						<div>
 							<label class="float-right">Username: <input type="text"
 								name="name" /></label> <label class="float-right">Password: <input
@@ -36,7 +36,7 @@
 						</div>
 					</form>
 					<div th:if="${@mainController.registerFormVisible}">
-						<form action="/registernewplayer">
+						<form action="/registernewplayer" method="post">
 							<div class="float-right">
 								<label class="float-right register-top">New username: <input type="text"
 									name="userName" /></label> <label class="float-right">Password: <input

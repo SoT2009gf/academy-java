@@ -22,7 +22,7 @@ public class GameRating {
 	public GameRating(String userName, String game, int rating) {
 		this.userName = userName;
 		this.game = game;
-		this.rating = rating;
+		this.setRating(rating);
 	}
 
 	public int getIdent() {
@@ -39,5 +39,9 @@ public class GameRating {
 
 	public int getRating() {
 		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 }

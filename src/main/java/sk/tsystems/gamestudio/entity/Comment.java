@@ -15,14 +15,14 @@ public class Comment {
 
 	private String game;
 
-	private String comment;
+	private String content;
 
 	public Comment() {}
 
-	public Comment(String userName, String game, String comment) {
+	public Comment(String userName, String game, String content) {
 		this.userName = userName;
 		this.game = game;
-		this.comment = comment;
+		this.content = content;
 	}
 
 	public int getIdent() {
@@ -37,7 +37,7 @@ public class Comment {
 		return game;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
 }

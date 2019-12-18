@@ -44,8 +44,7 @@
 								name="guessedNumber" autofocus></input></label>
 							<button type="submit">Guess</button>
 						</form>
-						<span th:text="${@guessTheNumberController.message}"></span>
-						<p>Try again.</p>
+						<span th:utext="${@guessTheNumberController.guessedNumber} != null ? ${@guessTheNumberController.message}: ''"></span>
 					</div>
 					<div th:if="${@guessTheNumberController.solved}">
 						<p>Congratulations, You guessed right.</p>
@@ -53,6 +52,21 @@
 							href="/guessthenumber" class="button"><button type="button">Play
 								again</button></a>
 					</div>
+
+
+					<div th:if="${@mainController.logged}">
+						<form action="/addcomment" method="post">
+							<input type="hidden" name="game" value="guessthenumber"></input>
+							<label>Add comment:<textarea name="content" rows="3"
+									cols="33"></textarea></label>
+							<button type=submit>Submit</button>
+						</form>
+					</div>
+					<ul>
+						<li th:each="comment : ${@guessTheNumberController.comments}"><span
+							th:text="${comment.content}"></span> <span
+							th:text="${comment.userName}"></span></li>
+					</ul>
 				</main>
 			</div>
 			<div class="col-md-4 col-12">
@@ -63,6 +77,30 @@
 							th:text="${score.userName}"></span> <span
 							th:text="${score.value}"></span></li>
 					</ol>
+				</aside>
+				<aside>
+					<h4>Game Rating</h4>
+					<div th:if="${@guessTheNumberController.rating > 0}">
+						<span th:text="${@guessTheNumberController.rating}"></span>
+					</div>
+					<div th:unless="${@guessTheNumberController.rating > 0}">
+						<span>Not rated yet</span>
+					</div>
+					<div
+						th:if="${@mainController.logged}">
+						<form action="/addrating" method="post">
+							<input type="hidden" name="game" value="guessthenumber"></input>
+							<label>Your rating:<select name="rating">
+									<option value="">Please choose</option>
+									<option value="1">It's terrible</option>
+									<option value="2">I don't like it</option>
+									<option value="3">Can't decide</option>
+									<option value="4">I like it</option>
+									<option value="5">I like it very much</option>
+							</select></label>
+							<button type=submit>Submit</button>
+						</form>
+					</div>
 				</aside>
 			</div>
 		</div>

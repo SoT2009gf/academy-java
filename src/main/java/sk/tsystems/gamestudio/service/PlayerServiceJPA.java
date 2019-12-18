@@ -2,10 +2,10 @@ package sk.tsystems.gamestudio.service;
 
 import org.springframework.stereotype.Component;
 
+
 import sk.tsystems.gamestudio.entity.Player;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -22,13 +22,8 @@ public class PlayerServiceJPA implements PlayerService {
 	}
 
 	@Override
-	public Player getPlayer(String userName) {
-		try {
+	public Player getPlayer(String userName) {		
 		return (Player) entityManager.createQuery("select p from Player p where p.name = :name")
-				.setParameter("name", userName).getSingleResult();
-		}catch(NoResultException ex) {
-			return null;
-		}
+				.setParameter("name", userName).getSingleResult();		
 	}
-
 }

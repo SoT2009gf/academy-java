@@ -2,10 +2,10 @@ package sk.tsystems.gamestudio.service;
 
 import org.springframework.stereotype.Component;
 
+
 import sk.tsystems.gamestudio.entity.Score;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -25,12 +25,8 @@ public class ScoreServiceJPA implements ScoreService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Score> getTopScores(String game) {
-		try {
 		return (List<Score>) entityManager
 				.createQuery("select s from Score s where s.game = :game order by s.value desc")
 				.setParameter("game", game).setMaxResults(10).getResultList();
-		} catch(NoResultException ex) {
-			return null;
-		}
 	}
 }

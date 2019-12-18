@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.game.guessthenumber.core.GuessTheNumberLogic;
+import sk.tsystems.gamestudio.service.CommentService;
+import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
@@ -20,7 +23,7 @@ public class GuessTheNumberController {
 
 	private GuessTheNumberLogic guessTheNumberLogic;
 
-	private int guessedNumber;
+	private Integer guessedNumber;
 
 	private long startMillis;
 
@@ -34,6 +37,12 @@ public class GuessTheNumberController {
 	@Autowired
 	private ScoreService scoreService;
 
+	@Autowired
+	private CommentService commentService;
+
+	@Autowired
+	private RatingService ratingService;
+
 	@RequestMapping
 	public String index() {
 		bottom = 0;
@@ -41,22 +50,22 @@ public class GuessTheNumberController {
 		guessTheNumberLogic = new GuessTheNumberLogic(bottom, top);
 		guessTheNumberLogic.thinkNumber();
 		startMillis = System.currentTimeMillis();
+		guessedNumber = null;
 		return "guessthenumber";
 	}
 
 	@RequestMapping("/guess")
 	public String guess(String guessedNumber) {
-		Score score;
 		if (!isSolved()) {
 			try {
 				this.guessedNumber = Integer.parseInt(guessedNumber);
 			} catch (NumberFormatException ex) {
-				this.guessedNumber = -1;
+				this.guessedNumber = null;
 			}
 			if (isSolved() && mainController.isLogged()) {
-				score = new Score(mainController.getLoggedPlayer().getName(), "guessthenumber",
-						((int) ((top - bottom) * 15 - getPlayingSeconds())));
-				scoreService.addScore(score);
+				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "guessthenumber",
+						((int) ((top - bottom) * 15 - getPlayingSeconds()))));
+
 			}
 		}
 		return "guessthenumber";
@@ -64,16 +73,20 @@ public class GuessTheNumberController {
 	}
 
 	public boolean isSolved() {
-		return guessTheNumberLogic.guess(guessedNumber) == 0;
+		if (guessedNumber == null) {
+			return false;
+		} else {
+			return guessTheNumberLogic.guess(guessedNumber) == 0;
+		}
 	}
 
 	public String getMessage() {
 		String message = null;
 
 		if (guessTheNumberLogic.guess(guessedNumber) > 0) {
-			message = "Greater.";
+			message = "Greater.<br />Try again.";
 		} else if (guessTheNumberLogic.guess(guessedNumber) < 0) {
-			message = "Lower.";
+			message = "Lower.<br />Try again.";
 		} else {
 			message = "It was number " + guessedNumber + ".";
 		}
@@ -86,5 +99,17 @@ public class GuessTheNumberController {
 
 	public List<Score> getScores() {
 		return scoreService.getTopScores("guessthenumber");
+	}
+
+	public List<Comment> getComments() {
+		return commentService.getComments("guessthenumber");
+	}
+
+	public double getRating() {
+		return ratingService.getRating("guessthenumber");
+	}
+
+	public Integer getGuessedNumber() {
+		return guessedNumber;
 	}
 }
