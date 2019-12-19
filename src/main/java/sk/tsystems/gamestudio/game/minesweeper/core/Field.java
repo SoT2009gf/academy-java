@@ -197,7 +197,7 @@ public class Field {
 	 *
 	 * @return true if game is solved, false otherwise
 	 */
-	private boolean isSolved() {
+	public boolean isSolved() {
 		return rowCount * columnCount - getNumberOf(Tile.State.OPEN) == mineCount;
 	}
 

@@ -17,25 +17,23 @@ public class RatingServiceJPA implements RatingService {
 	private EntityManager entityManager;
 
 	@Override
-	public void addRating(GameRating rating) {
-		entityManager.persist(rating);
+	public void setRating(String game, String userName, int rating) {
+		GameRating savedRating = getRating(game, userName);
 
+		if (savedRating == null) {
+			entityManager.persist(new GameRating(userName, game, rating));
+		} else {
+			entityManager.createQuery(
+					"update GameRating g set g.rating = :rating where g.game = :game and g.userName = :userName")
+					.setParameter("rating", rating).setParameter("game", game).setParameter("userName", userName)
+					.executeUpdate();
+		}
 	}
 
 	@Override
-	public double getRating(String game) {
-		Object result;
-
-		result = entityManager.createQuery("select trunc(avg(g.rating), 1) from GameRating g where g.game = :game")
-				.setParameter("game", game).getSingleResult();
-
-		return result == null ? -1.0 : ((Double) result).doubleValue();
-	}
-
-	@Override
-	public GameRating getRatingObject(String game, String userName) {
+	public GameRating getRating(String game, String userName) {
 		try {
-			return (GameRating)entityManager
+			return (GameRating) entityManager
 					.createQuery("select g from GameRating g where g.game = :game and g.userName = :userName")
 					.setParameter("game", game).setParameter("userName", userName).getSingleResult();
 		} catch (NoResultException ex) {
@@ -44,11 +42,11 @@ public class RatingServiceJPA implements RatingService {
 	}
 
 	@Override
-	public void updateRating(GameRating gameRating) {
-		entityManager
-				.createQuery(
-						"update GameRating g set g.rating = :rating where g.game = :game and g.userName = :userName")
-				.setParameter("rating", gameRating.getRating()).setParameter("game", gameRating.getGame())
-				.setParameter("userName", gameRating.getUserName()).executeUpdate();
+	public double getRatingAvg(String game) {
+		Object result;
+
+		result = entityManager.createQuery("select avg(g.rating) from GameRating g where g.game = :game")
+				.setParameter("game", game).getSingleResult();
+		return result == null ? -1.0 : ((Double) result).doubleValue();
 	}
 }

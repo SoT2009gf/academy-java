@@ -1,20 +1,54 @@
-body {
-	text-align: center;
-}
-
-img {
-	max-width: 1.5rem;
-}
-
 h1 {
 	text-align: center;
 }
 
-.row { 
-	display: block;
-	font-size: 0;
+h2 {
+	text-align: center;
+	margin-top: 0.5em;
 }
 
-.cell {
-	display: inline-block;
+a, a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #007bff;
+}
+
+a.button {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: initial;
+}
+
+button {
+	cursor: pointer;
+}
+
+.minesweeper-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.minesweeper-column {
+	display: flex;
+	flex-direction: column;
+	max-width: 1.5em
+}
+
+img {
+	max-width: 100%;
+}
+
+textarea {
+	max-width: 77%;
+}
+
+.game-field-container {
+	line-height: 1em;
+	display: table;
+	margin: 0 auto;
 }

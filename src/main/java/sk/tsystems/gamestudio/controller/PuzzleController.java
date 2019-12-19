@@ -94,7 +94,6 @@ public class PuzzleController {
 	}
 
 	public double getRating() {
-		return ratingService.getRating("puzzle");
+		return ratingService.getRatingAvg("puzzle");
 	}
-
 }

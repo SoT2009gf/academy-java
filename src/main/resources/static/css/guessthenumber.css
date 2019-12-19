@@ -14,12 +14,20 @@ a, a:visited {
 
 a:hover {
 	text-decoration: none;
-	color: #007bff;	
+	color: #007bff;
 }
 
 a.button {
- 	display: block;
-	text-align: center; 
-    text-decoration: none;
-    color: initial;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: initial;
+}
+
+button {
+	cursor: pointer;
+}
+
+textarea {
+	max-width: 77%;
 }

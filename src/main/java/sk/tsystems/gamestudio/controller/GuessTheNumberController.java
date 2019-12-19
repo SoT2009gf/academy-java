@@ -106,7 +106,7 @@ public class GuessTheNumberController {
 	}
 
 	public double getRating() {
-		return ratingService.getRating("guessthenumber");
+		return ratingService.getRatingAvg("guessthenumber");
 	}
 
 	public Integer getGuessedNumber() {

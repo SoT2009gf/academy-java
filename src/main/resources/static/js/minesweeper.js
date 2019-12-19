@@ -18,8 +18,4 @@ $(document).ready(function() {
 	$(".tile").contextmenu(function(event) {
 		return false;
 	});
-
-	$(".openedTile").contextmenu(function(event) {
-		return false;
-	});
 });

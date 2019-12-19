@@ -4,11 +4,9 @@ import sk.tsystems.gamestudio.entity.GameRating;
 
 public interface RatingService {
 
-	void addRating(GameRating rating);
+	void setRating(String game, String userName, int rating);
 
-	double getRating(String game);
+	GameRating getRating(String game, String userName);
 
-	GameRating getRatingObject(String game, String userName);
-
-	void updateRating(GameRating gameRating);
+	double getRatingAvg(String game);
 }

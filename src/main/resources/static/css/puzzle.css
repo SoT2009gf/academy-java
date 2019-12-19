@@ -24,6 +24,10 @@ a.button {
 	color: initial;
 }
 
+button {
+	cursor: pointer;
+}
+
 .puzzle-row {
 	display: flex;
 	flex-direction: row;
