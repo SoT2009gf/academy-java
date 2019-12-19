@@ -10,7 +10,9 @@ public class Field {
 
 	private final int columnCount;
 
-	private Tile openedTile; 
+	private Tile openedTile;
+	
+	private boolean marked;
 	
 	private final Tile[][] tiles;
 
@@ -62,14 +64,10 @@ public class Field {
 				openedTile.setState(State.PAIRED);
 				openedTile = null;
 			} else if(openedTile.getValue() != tile.getValue() && !tile.equals(openedTile)) {
-				tile.setState(State.CLOSED);				
-				openedTile.setState(State.CLOSED);
+				tile.setState(State.MARKED);				
+				openedTile.setState(State.MARKED);
+				setMarked(true);
 				openedTile = null;
-				try {
-					TimeUnit.SECONDS.sleep(2);
-				} catch (InterruptedException ex) {
-					ex.printStackTrace();
-				}
 			}
 		}
 	}
@@ -85,7 +83,29 @@ public class Field {
 		return true;
 	}
 
-	public Tile getOpenedTile() {
-		return openedTile;
+	public void close() {
+		try {
+			TimeUnit.MILLISECONDS.sleep(2000);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+		
+		for(int row = 0; row < rowCount; row++) {
+			for(int column = 0; column < columnCount; column++) {
+				Tile tile = getTile(row, column);
+				if(tile.getState() == State.MARKED) {
+					tile.setState(State.CLOSED);
+				}
+			}
+		}
+		setMarked(false);		
+	}
+
+	public boolean isMarked() {
+		return marked;
+	}
+
+	private void setMarked(boolean marked) {
+		this.marked = marked;
 	}
 }

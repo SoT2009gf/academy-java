@@ -68,17 +68,14 @@ public class PairsController {
 			for (int column = 0; column < field.getColumnCount(); column++) {
 				formatter.format("<div class='pairs-column'>\n");
 				Tile tile = field.getTile(row, column);
-				if (tile.getState() == State.OPENED && field.getOpenedTile() == null) {
+				if (tile.getState() == State.OPENED) {
 					formatter.format("<a href='/pairs/open?row=%d&column=%d'>%d</a>", row, column, tile.getValue());
 //							"<a href='/puzzle/move?tile=%d'><img src='/img/puzzle/img%d.jpg' alt='Puzzle piece number %d.'/></a>",
 //							tile.getValue(), tile.getValue(), tile.getValue());							
-				} else if (tile.getState() == State.OPENED && field.getOpenedTile() != null) {
-					formatter.format("<a href='/pairs/open?row=%d&column=%d'>%d</a>", row, column,
-							tile.getValue());
-				} else if (tile.getState() == State.CLOSED && field.getOpenedTile() != null) {
-					formatter.format("<a href='/pairs/open?row=%d&column=%d' class='secondTile'>?</a>", row, column);
-				} else if (tile.getState() == State.CLOSED && field.getOpenedTile() == null) {
+				} else if (tile.getState() == State.CLOSED) {
 					formatter.format("<a href='/pairs/open?row=%d&column=%d'>?</a>", row, column);
+				} else if (tile.getState() == State.MARKED) {
+					formatter.format("<a href='/pairs/open?row=%d&column=%d'>%d</a>", row, column, tile.getValue());
 				} else if (tile.getState() == State.PAIRED) {
 					formatter.format("%d", tile.getValue());
 				}
@@ -87,7 +84,6 @@ public class PairsController {
 			formatter.format("</div>\n");
 		}
 		return formatter.toString();
-
 	}
 
 	public boolean isSolved() {
@@ -108,5 +104,9 @@ public class PairsController {
 
 	public double getRating() {
 		return ratingService.getRatingAvg("pairs");
+	}
+
+	public boolean isMarked() {
+		return field.isMarked();
 	}
 }
