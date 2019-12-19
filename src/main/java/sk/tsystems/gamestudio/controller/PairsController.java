@@ -1,6 +1,7 @@
 package sk.tsystems.gamestudio.controller;
 
 import java.util.Formatter;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +12,28 @@ import org.springframework.web.context.WebApplicationContext;
 
 import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
-import sk.tsystems.gamestudio.game.puzzle.core.Field;
-import sk.tsystems.gamestudio.game.puzzle.core.Tile;
+import sk.tsystems.gamestudio.game.pairs.core.Field;
+import sk.tsystems.gamestudio.game.pairs.core.State;
+import sk.tsystems.gamestudio.game.pairs.core.Tile;
 import sk.tsystems.gamestudio.service.CommentService;
 import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-@RequestMapping("/puzzle")
-public class PuzzleController {
+@RequestMapping("/pairs")
+public class PairsController {
 
 	private Field field;
-	
+
 	private long startMillis;
 
 	@Autowired
 	private ScoreService scoreService;
-	
+
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private RatingService ratingService;
 
@@ -40,42 +42,52 @@ public class PuzzleController {
 
 	@RequestMapping
 	public String index() {
-		field = new Field(4, 4);
+		field = new Field();
 		startMillis = System.currentTimeMillis();
-		return "puzzle";
+		return "pairs";
 	}
 
-	@RequestMapping("/move")
-	public String move(int tile) {
+	@RequestMapping("/open")
+	public String move(int row, int column) {
 		if (!field.isSolved()) {
-			field.move(tile);
+			field.open(row, column);
 			if (field.isSolved() && mainController.isLogged()) {
-				int scoreValue = (int)(field.getRowCount() * field.getColumnCount() * 19 - getPlayingSeconds());
-				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "puzzle",
+				int scoreValue = (int) (field.getRowCount() * field.getColumnCount() * 12 - getPlayingSeconds());
+				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "pairs",
 						scoreValue > 0 ? scoreValue : 0));
 			}
 		}
-		return "puzzle";
+		return "pairs";
 	}
 
 	public String getHtmlField() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
 		for (int row = 0; row < field.getRowCount(); row++) {
-			formatter.format("<div class='puzzle-row'>\n");
+			formatter.format("<div class='pairs-row'>\n");
 			for (int column = 0; column < field.getColumnCount(); column++) {
-				formatter.format("<div class='puzzle-column'>\n");
+				formatter.format("<div class='pairs-column'>\n");
 				Tile tile = field.getTile(row, column);
-				if (tile != null) {
-					formatter.format(
-							"<a href='/puzzle/move?tile=%d'><img src='/img/puzzle/img%d.jpg' alt='Puzzle piece number %d.'/></a>",
-							tile.getValue(), tile.getValue(), tile.getValue());
+				if (tile.getState() == State.OPENED && field.getOpenedTile() == null) {
+					formatter.format("<a href='/pairs/open?row=%d&column=%d'>%d</a>", row, column, tile.getValue());
+//							"<a href='/puzzle/move?tile=%d'><img src='/img/puzzle/img%d.jpg' alt='Puzzle piece number %d.'/></a>",
+//							tile.getValue(), tile.getValue(), tile.getValue());							
+				} else if (tile.getState() == State.OPENED && field.getOpenedTile() != null) {
+					formatter.format("<a href='/pairs/open?row=%d&column=%d'>%d</a>", row, column,
+							tile.getValue());
+				} else if (tile.getState() == State.CLOSED && field.getOpenedTile() != null) {
+					formatter.format("<a href='/pairs/open?row=%d&column=%d' class='secondTile'>?</a>", row, column);
+				} else if (tile.getState() == State.CLOSED && field.getOpenedTile() == null) {
+					formatter.format("<a href='/pairs/open?row=%d&column=%d'>?</a>", row, column);
+				} else if (tile.getState() == State.PAIRED) {
+					formatter.format("%d", tile.getValue());
 				}
 				formatter.format("</div>\n");
 			}
 			formatter.format("</div>\n");
 		}
 		return formatter.toString();
+
 	}
 
 	public boolean isSolved() {
@@ -85,16 +97,16 @@ public class PuzzleController {
 	private long getPlayingSeconds() {
 		return (System.currentTimeMillis() - startMillis) / 1000;
 	}
-	
+
 	public List<Score> getScores() {
-		return scoreService.getTopScores("puzzle");
+		return scoreService.getTopScores("pairs");
 	}
 
 	public List<Comment> getComments() {
-		return commentService.getComments("puzzle");
+		return commentService.getComments("pairs");
 	}
 
 	public double getRating() {
-		return ratingService.getRatingAvg("puzzle");
+		return ratingService.getRatingAvg("pairs");
 	}
 }

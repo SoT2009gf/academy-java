@@ -17,27 +17,17 @@ public class RatingServiceJPA implements RatingService {
 	private EntityManager entityManager;
 
 	@Override
-	public void setRating(String game, String userName, int rating) {
-		GameRating savedRating = getRating(game, userName);
-
-		if (savedRating == null) {
-			entityManager.persist(new GameRating(userName, game, rating));
-		} else {
-			entityManager.createQuery(
-					"update GameRating g set g.rating = :rating where g.game = :game and g.userName = :userName")
-					.setParameter("rating", rating).setParameter("game", game).setParameter("userName", userName)
-					.executeUpdate();
-		}
-	}
-
-	@Override
-	public GameRating getRating(String game, String userName) {
+	public void setRating(GameRating rating) {
+		
 		try {
-			return (GameRating) entityManager
+			GameRating dbRating = (GameRating) entityManager
 					.createQuery("select g from GameRating g where g.game = :game and g.userName = :userName")
-					.setParameter("game", game).setParameter("userName", userName).getSingleResult();
+					.setParameter("game", rating.getGame()).setParameter("userName", rating.getUserName())
+					.getSingleResult();
+			
+			dbRating.setRating(rating.getRating());
 		} catch (NoResultException ex) {
-			return null;
+			entityManager.persist(rating);
 		}
 	}
 
@@ -45,8 +35,9 @@ public class RatingServiceJPA implements RatingService {
 	public double getRatingAvg(String game) {
 		Object result;
 
-		result = entityManager.createQuery("select avg(g.rating) from GameRating g where g.game = :game")
+		result = entityManager.createQuery("select trunc(avg(g.rating), 1) from GameRating g where g.game = :game")
 				.setParameter("game", game).getSingleResult();
+		
 		return result == null ? -1.0 : ((Double) result).doubleValue();
 	}
 }

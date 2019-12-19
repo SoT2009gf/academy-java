@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import sk.tsystems.gamestudio.entity.GameRating;
 import sk.tsystems.gamestudio.service.RatingService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-@RequestMapping("/addrating")
+@RequestMapping("/setrating")
 public class RatingController {
 
 	@Autowired
@@ -23,8 +24,8 @@ public class RatingController {
 	@RequestMapping
 	public String addRating(String game, int rating) {
 		if (rating >= 1 && rating <= 5) {
-			ratingService.setRating(game, mainController.getLoggedPlayer().getName(), rating);
+			ratingService.setRating(new GameRating(mainController.getLoggedPlayer().getName(), game, rating));
 		}
-		return "/" + game;
+		return game;
 	}
 }

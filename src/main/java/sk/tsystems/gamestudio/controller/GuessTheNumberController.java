@@ -63,8 +63,9 @@ public class GuessTheNumberController {
 				this.guessedNumber = null;
 			}
 			if (isSolved() && mainController.isLogged()) {
+				int scoreValue = ((int) ((top - bottom) * 15 - getPlayingSeconds())); 
 				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "guessthenumber",
-						((int) ((top - bottom) * 15 - getPlayingSeconds()))));
+						scoreValue > 0 ? scoreValue : 0));
 
 			}
 		}

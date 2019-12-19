@@ -53,8 +53,9 @@ public class MinesweeperController {
 		if (field.getState() == GameState.PLAYING) {
 			field.openTile(row, column);
 			if (field.getState() == GameState.SOLVED && mainController.isLogged()) {
+				int scoreValue = (int)(field.getRowCount() * field.getColumnCount() * field.getMineCount() * 3 - getPlayingSeconds()); 
 				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "minesweeper",
-						(int)(field.getRowCount() * field.getColumnCount() * field.getMineCount() * 3 - getPlayingSeconds())));
+						scoreValue > 0 ? scoreValue : 0));
 			}			
 		}
 		return "minesweeper";

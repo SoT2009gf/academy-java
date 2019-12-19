@@ -107,7 +107,7 @@ public class ConsoleUI implements UserInterface {
 	 * playing field according to the input string.
 	 */
 	private boolean processInput() {
-		System.out.println("Please enter your selection (X) EXIT, (MA1) MARK, (OB4) OPEN:");
+		System.out.println("Please enter your selection (X) EXIT, (MA1) MARK, (OB4) OPENED:");
 		String answer = readLine();
 
 		try {

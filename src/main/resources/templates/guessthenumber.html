@@ -99,7 +99,7 @@
 						<span>Not rated yet.</span>
 					</div>
 					<div th:if="${@mainController.logged}">
-						<form action="/addrating" method="post">
+						<form action="/setrating" method="post">
 							<input type="hidden" name="game" value="guessthenumber"></input>
 							<label>Your rating: <select name="rating">
 									<option value="">Please choose</option>
