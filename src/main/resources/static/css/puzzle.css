@@ -36,10 +36,11 @@ button {
 .puzzle-column {
 	display: flex;
 	flex-direction: column;
-	width: 8em
+	width: 8em;
 }
 
 img {
+	margin: auto auto;
 	max-width: 100%;
 }
 

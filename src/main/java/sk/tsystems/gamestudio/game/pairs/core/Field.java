@@ -1,7 +1,6 @@
 package sk.tsystems.gamestudio.game.pairs.core;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import sk.tsystems.gamestudio.game.pairs.core.Tile;
 
@@ -11,8 +10,6 @@ public class Field {
 	private final int columnCount;
 
 	private Tile openedTile;
-	
-	private boolean marked;
 	
 	private final Tile[][] tiles;
 
@@ -53,20 +50,18 @@ public class Field {
 		}
 	}
 	
-	public void open(int row, int column) {
+	public void openTile(int row, int column) {
 		Tile tile = getTile(row, column);
 		if(openedTile == null) {
 			openedTile = tile;
-			tile.setState(State.OPENED);
+			tile.setState(State.FIRST);
 		} else if(openedTile != null) {
 			if(openedTile.getValue() == tile.getValue() && !tile.equals(openedTile)) {
 				tile.setState(State.PAIRED);
 				openedTile.setState(State.PAIRED);
 				openedTile = null;
 			} else if(openedTile.getValue() != tile.getValue() && !tile.equals(openedTile)) {
-				tile.setState(State.MARKED);				
-				openedTile.setState(State.MARKED);
-				setMarked(true);
+				tile.setState(State.SECOND);				
 				openedTile = null;
 			}
 		}
@@ -80,32 +75,18 @@ public class Field {
 				}
 			}
 		}
-		return true;
+		return true;		
 	}
 
-	public void close() {
-		try {
-			TimeUnit.MILLISECONDS.sleep(2000);
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
-		}
-		
+	public void closePair() {
 		for(int row = 0; row < rowCount; row++) {
 			for(int column = 0; column < columnCount; column++) {
 				Tile tile = getTile(row, column);
-				if(tile.getState() == State.MARKED) {
+				if(tile.getState() == State.FIRST || tile.getState() == State.SECOND) {
 					tile.setState(State.CLOSED);
 				}
 			}
 		}
-		setMarked(false);		
-	}
-
-	public boolean isMarked() {
-		return marked;
-	}
-
-	private void setMarked(boolean marked) {
-		this.marked = marked;
+				
 	}
 }

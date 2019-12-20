@@ -39,8 +39,16 @@
 			</div>
 			<div class="col-md-6 col-12">
 				<main>
-					<div class="game-field-container"
-						th:utext="${@minesweeperController.HtmlField}"></div>
+					<div class="game-field-container">
+						<div class="minesweeper-infobar">
+							<div id="mine-count" th:text="${@minesweeperController.mineCount}"></div>
+							<div class="center">
+								<button id="smile-icon" type="button"><img src="/img/minesweeper/smile.png" alt="Smile icon."/></button>
+							</div>
+							<div id="timer" th:text="${@minesweeperController.seconds}"></div>
+						</div>
+						<div th:utext="${@minesweeperController.HtmlField}"></div>
+					</div>
 
 					<div th:if="${@mainController.logged}">
 						<form action="/addcomment" method="post">

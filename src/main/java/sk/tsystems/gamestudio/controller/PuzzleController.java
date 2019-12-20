@@ -49,7 +49,7 @@ public class PuzzleController {
 	public String move(int tile) {
 		if (!field.isSolved()) {
 			field.move(tile);
-			if (field.isSolved() && mainController.isLogged()) {
+			if(field.isSolved() && mainController.isLogged()) {
 				int scoreValue = (int)(field.getRowCount() * field.getColumnCount() * 19 - getPlayingSeconds());
 				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "puzzle",
 						scoreValue > 0 ? scoreValue : 0));

@@ -39,7 +39,7 @@
 			</div>
 			<div class="col-md-6 col-12">
 				<main>
-					<div class="game-field-container" th:utext="${@pairsController.marked} ? ${@pairsController.HtmlFieldClosedTiles} : ${@pairsController.HtmlField}"></div>
+					<div class="game-field-container" th:utext="${@pairsController.HtmlField}"></div>
 
 					<div th:if="${@mainController.logged}">
 						<form action="/addcomment" method="post">

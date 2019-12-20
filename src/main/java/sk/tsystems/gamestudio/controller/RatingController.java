@@ -22,9 +22,16 @@ public class RatingController {
 	private RatingService ratingService;
 
 	@RequestMapping
-	public String addRating(String game, int rating) {
-		if (rating >= 1 && rating <= 5) {
-			ratingService.setRating(new GameRating(mainController.getLoggedPlayer().getName(), game, rating));
+	public String addRating(String game, String rating) {
+		if (!rating.isBlank()) {
+			try {
+				int convertedRating = Integer.parseInt(rating);
+				if (convertedRating >= 1 && convertedRating <= 5) {
+					ratingService.setRating(new GameRating(mainController.getLoggedPlayer().getName(), game, convertedRating));
+				}
+			} catch (NumberFormatException ex) {
+				return game;
+			}
 		}
 		return game;
 	}

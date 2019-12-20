@@ -85,7 +85,7 @@ public class Field {
 				tileNumber++;
 			}
 		}
-		return true;
+		return true;		
 	}
 
 	private void shuffleField() {

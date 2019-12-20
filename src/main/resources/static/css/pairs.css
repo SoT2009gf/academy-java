@@ -44,9 +44,22 @@ button {
 }
 
 img {
-	max-width: 100%;
+	width: 100%;
 }
 
 textarea {
 	max-width: 77%;
+}
+
+.tile {
+	cursor: pointer;
+}
+
+.paired {
+	text-align: center;
+}
+
+.disabled {
+   pointer-events: none;
+   cursor: default;
 }

@@ -34,10 +34,9 @@ public class MainController {
 	}
 
 	@RequestMapping("/registernewplayer")
-	public String registerNewPlayer(String userName, String passwd) {
-		if (!userName.isBlank() && !passwd.isBlank()) {
-			if (playerService.getPlayer(userName) == null) {
-				Player player = new Player(userName, passwd);
+	public String registerNewPlayer(Player player) {
+		if (!player.getName().isBlank() && !player.getPasswd().isBlank()) {
+			if (playerService.getPlayer(player.getName()) == null) {
 				playerService.addPlayer(player);
 				loggedPlayer = player;
 			}
@@ -46,15 +45,14 @@ public class MainController {
 	}
 
 	@RequestMapping("/login")
-	public String login(String name, String passwd) {
-		if (!name.isBlank() && !passwd.isBlank()) {
-			Player player = playerService.getPlayer(name);
-			if (player != null) {
-				if (player.getPasswd().equals(passwd)) {
-					loggedPlayer = player;
-				}
+	public String login(Player player) {
+		if (!player.getName().isBlank() && !player.getPasswd().isBlank()) {
+			Player dbPlayer = playerService.getPlayer(player.getName());
+			if (dbPlayer != null && player.getPasswd().equals(dbPlayer.getPasswd())) {
+				loggedPlayer = player;
 			}
 		}
+
 		return "redirect:/";
 	}
 

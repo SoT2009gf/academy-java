@@ -51,4 +51,29 @@ textarea {
 	line-height: 1em;
 	display: table;
 	margin: 0 auto;
+	background-color: #B9B9B9;
+	margin: 0 auto;
+}
+
+.minesweeper-infobar {
+	display: flex;
+	justify-content: space-between;
+}
+
+.center {
+	display: flex;
+}
+
+#timer {
+	display: flex;
+}
+
+#mine-count {
+	display: flex;
+}
+
+#smile-icon {
+	padding: 0;
+	max-width: 2em;
+	background-color: #B9B9B9;
 }

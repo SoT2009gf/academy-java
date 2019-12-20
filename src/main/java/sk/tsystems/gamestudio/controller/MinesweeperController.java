@@ -25,21 +25,20 @@ import sk.tsystems.gamestudio.service.ScoreService;
 public class MinesweeperController {
 
 	private Field field;
-	
+
 	private long startMillis;
-	
+
 	@Autowired
 	private ScoreService scoreService;
-	
+
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private RatingService ratingService;
 
 	@Autowired
 	private MainController mainController;
-
 
 	@RequestMapping
 	public String index() {
@@ -53,17 +52,20 @@ public class MinesweeperController {
 		if (field.getState() == GameState.PLAYING) {
 			field.openTile(row, column);
 			if (field.getState() == GameState.SOLVED && mainController.isLogged()) {
-				int scoreValue = (int)(field.getRowCount() * field.getColumnCount() * field.getMineCount() * 3 - getPlayingSeconds()); 
+				int scoreValue = (int) (field.getRowCount() * field.getColumnCount() * field.getMineCount() * 3
+						- getPlayingSeconds());
 				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "minesweeper",
 						scoreValue > 0 ? scoreValue : 0));
-			}			
+			}
 		}
 		return "minesweeper";
 	}
 
 	@RequestMapping("/mark")
 	public String mark(int row, int column) {
-		field.markTile(row, column);
+		if (field.getState() == GameState.PLAYING) {
+			field.markTile(row, column);
+		}
 		return "minesweeper";
 	}
 
@@ -102,19 +104,18 @@ public class MinesweeperController {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	public boolean isSolved() {
 		return field.isSolved();
 	}
-	
+
 	public boolean isFailed() {
 		return field.getState() == GameState.FAILED;
 	}
-	
+
 	private long getPlayingSeconds() {
 		return (System.currentTimeMillis() - startMillis) / 1000;
 	}
-
 
 	public List<Score> getScores() {
 		return scoreService.getTopScores("minesweeper");
@@ -126,5 +127,17 @@ public class MinesweeperController {
 
 	public double getRating() {
 		return ratingService.getRatingAvg("minesweeper");
+	}
+	
+	public String getMineCount() {
+		@SuppressWarnings("resource")
+		Formatter formatter = new Formatter();
+		return formatter.format("%03d", field.getRemainingMineCount()).toString();
+	}
+	
+	public String getSeconds() {
+		@SuppressWarnings("resource")
+		Formatter formatter = new Formatter();
+		return formatter.format("%03d", getPlayingSeconds()).toString();
 	}
 }

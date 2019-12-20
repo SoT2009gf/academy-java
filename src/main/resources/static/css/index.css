@@ -29,3 +29,13 @@ a.button {
 .create {
 	margin-left: 10.9em;
 }
+
+.main-game-links {
+	display: table;
+	margin: 0 auto;
+	max-width: 40em;	
+}
+
+img {
+	max-width: 100%;
+}
