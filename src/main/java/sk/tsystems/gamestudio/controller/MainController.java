@@ -57,11 +57,11 @@ public class MainController {
 	}
 
 	@RequestMapping("/logout")
-	public String logout() {
+	public String logout(String game) {
 		loggedPlayer = null;
 		registerFormVisible = false;
 
-		return "redirect:/";
+		return game;
 	}
 
 	public boolean isLogged() {

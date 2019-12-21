@@ -79,27 +79,26 @@ public class MinesweeperController {
 				formatter.format("<div class='minesweeper-column'>\n");
 				Tile tile = field.getTile(row, column);
 				formatter.format("<a href='/minesweeper/open?row=%d&column=%d'class='tile'>", row, column);
-				formatter.format("<img src='/img/minesweeper/%s.png'></a>", getImageName(tile));
+				formatter.format(getImageName(tile));
 				formatter.format("</a>");
 				formatter.format("</div>\n");
 			}
 			formatter.format("</div>\n");
 		}
-
 		return formatter.toString();
 	}
 
 	private String getImageName(Tile tile) {
 		switch (tile.getState()) {
 		case CLOSED:
-			return "closed";
+			return "<img src='/img/minesweeper/closed.png'/>";
 		case MARKED:
-			return "marked";
+			return "<img src='/img/minesweeper/marked.png'/>";
 		case OPEN:
 			if (tile instanceof Clue)
-				return "open" + ((Clue) tile).getValue();
+				return "<img src='/img/minesweeper/open" + ((Clue) tile).getValue() + ".png'/>";
 			else
-				return "mine";
+				return "<img class='mine' src='/img/minesweeper/mine.png'/>";
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -128,16 +127,29 @@ public class MinesweeperController {
 	public double getRating() {
 		return ratingService.getRatingAvg("minesweeper");
 	}
-	
+
 	public String getMineCount() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
 		return formatter.format("%03d", field.getRemainingMineCount()).toString();
 	}
-	
+
 	public String getSeconds() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
 		return formatter.format("%03d", getPlayingSeconds()).toString();
+	}
+
+	public String getGameState() {
+		switch (field.getState()) {
+		case PLAYING:
+			return "playing";
+		case FAILED:
+			return "failed";
+		case SOLVED:
+			return "solved";
+		default:
+			return null;
+		}
 	}
 }

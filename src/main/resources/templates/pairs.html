@@ -39,8 +39,11 @@
 			</div>
 			<div class="col-md-6 col-12">
 				<main>
-					<div class="game-field-container" th:utext="${@pairsController.HtmlField}"></div>
-
+					<div class="game-field-container"
+						th:utext="${@pairsController.HtmlField}"></div>
+					<div th:if="${@pairsController.solved}">
+						<p>Congratulations, You solved the pairs.</p>
+					</div>
 					<div th:if="${@mainController.logged}">
 						<form action="/addcomment" method="post">
 							<input type="hidden" name="game" value="pairs"></input> <label>Add
@@ -104,7 +107,7 @@
 			</div>
 		</div>
 	</div>
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 		crossorigin="anonymous"></script>
 	<script>
@@ -112,6 +115,6 @@
 				|| document
 						.write('<script src="\/js\/jquery.min.js"><\/script>');
 	</script>
-	<script src="/js/pairs.js"></script>	
+	<script src="/js/pairs.js"></script>
 </body>
 </html>
