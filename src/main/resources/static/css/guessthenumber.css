@@ -1,4 +1,4 @@
-h1 {
+h1, h3 {
 	text-align: center;
 }
 
@@ -17,17 +17,29 @@ a:hover {
 	color: #007bff;
 }
 
-a.button {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: initial;
-}
-
-button {
-	cursor: pointer;
-}
-
 textarea {
 	max-width: 77%;
+}
+
+.comment {
+	max-width: 100%;
+}
+
+.comment-content {
+	max-width: 100%;
+	text-align: justify;
+	overflow: auto;
+}
+
+.comment-username {
+	max-width: 100;
+	padding-bottom: 1.5em;
+}
+
+#comments-heading {
+	margin-top: 1em;
+}
+
+#navigation {
+	text-align: right;
 }

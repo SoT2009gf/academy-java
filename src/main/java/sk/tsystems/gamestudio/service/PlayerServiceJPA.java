@@ -30,4 +30,15 @@ public class PlayerServiceJPA implements PlayerService {
 			return null;
 		}
 	}
+
+	@Override
+	public void changePwd(Player player) {
+		try {
+			Player dbPlayer = (Player) entityManager.createQuery("select p from Player p where p.name = :name")
+					.setParameter("name", player.getName()).getSingleResult();
+
+			dbPlayer.setPasswd(player.getPasswd());
+		} catch (NoResultException ex) {
+		}
+	}
 }

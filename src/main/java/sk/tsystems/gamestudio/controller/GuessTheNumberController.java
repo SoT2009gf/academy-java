@@ -1,6 +1,6 @@
 package sk.tsystems.gamestudio.controller;
 
-import java.util.List;
+import java.util.Formatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,11 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
-import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.game.guessthenumber.core.GuessTheNumberLogic;
-import sk.tsystems.gamestudio.service.CommentService;
-import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
@@ -31,17 +28,13 @@ public class GuessTheNumberController {
 
 	private int top;
 
+	private boolean solved;
+
 	@Autowired
 	private MainController mainController;
 
 	@Autowired
 	private ScoreService scoreService;
-
-	@Autowired
-	private CommentService commentService;
-
-	@Autowired
-	private RatingService ratingService;
 
 	@RequestMapping
 	public String index() {
@@ -51,6 +44,7 @@ public class GuessTheNumberController {
 		guessTheNumberLogic.thinkNumber();
 		startMillis = System.currentTimeMillis();
 		guessedNumber = null;
+		solved = false;
 		return "guessthenumber";
 	}
 
@@ -62,8 +56,11 @@ public class GuessTheNumberController {
 			} catch (NumberFormatException ex) {
 				this.guessedNumber = null;
 			}
+			
+			solved = guessTheNumberLogic.guess(this.guessedNumber) == 0;
+			
 			if (isSolved() && mainController.isLogged()) {
-				int scoreValue = ((int) ((top - bottom) * 15 - getPlayingSeconds())); 
+				int scoreValue = ((int) ((top - bottom) * 15 - getPlayingSeconds()));
 				scoreService.addScore(new Score(mainController.getLoggedPlayer().getName(), "guessthenumber",
 						scoreValue > 0 ? scoreValue : 0));
 
@@ -73,23 +70,32 @@ public class GuessTheNumberController {
 
 	}
 
-	public boolean isSolved() {
-		if (guessedNumber == null) {
-			return false;
-		} else {
-			return guessTheNumberLogic.guess(guessedNumber) == 0;
+	public String getHtmlField() {
+		@SuppressWarnings("resource")
+		Formatter formatter = new Formatter();
+		if (!isSolved()) {
+			formatter.format("<p>I think of the number... Guess which one.</p>\n");
+			formatter.format("<form action='/guessthenumber/guess'>\n");
+			formatter.format(
+					"<label>I'm guessing it's the number: <input type='text' name='guessedNumber' autofocus/></label>\n");
+			formatter.format("<button type='submit'>Guess</button>\n");
+			formatter.format("</form>\n");
 		}
+		if (guessedNumber != null) {
+			formatter.format("<p>%s</p>\n", getMessage());
+		}
+		return formatter.toString();
 	}
 
 	public String getMessage() {
-		String message = null;
+		String message;
 
 		if (guessTheNumberLogic.guess(guessedNumber) > 0) {
 			message = "Greater.<br />Try again.";
 		} else if (guessTheNumberLogic.guess(guessedNumber) < 0) {
 			message = "Lower.<br />Try again.";
 		} else {
-			message = "It was number " + guessedNumber + ".";
+			message = "Congratulations. You guessed right.<br />It was number " + guessedNumber + ".";
 		}
 		return message;
 	}
@@ -98,19 +104,11 @@ public class GuessTheNumberController {
 		return (System.currentTimeMillis() - startMillis) / 1000;
 	}
 
-	public List<Score> getScores() {
-		return scoreService.getTopScores("guessthenumber");
-	}
-
-	public List<Comment> getComments() {
-		return commentService.getComments("guessthenumber");
-	}
-
-	public double getRating() {
-		return ratingService.getRatingAvg("guessthenumber");
-	}
-
 	public Integer getGuessedNumber() {
 		return guessedNumber;
+	}
+
+	public boolean isSolved() {
+		return solved;
 	}
 }

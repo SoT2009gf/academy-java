@@ -1,7 +1,6 @@
 package sk.tsystems.gamestudio.controller;
 
 import java.util.Formatter;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -9,14 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
-import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.game.minesweeper.core.Clue;
 import sk.tsystems.gamestudio.game.minesweeper.core.Field;
 import sk.tsystems.gamestudio.game.minesweeper.core.GameState;
 import sk.tsystems.gamestudio.game.minesweeper.core.Tile;
-import sk.tsystems.gamestudio.service.CommentService;
-import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
@@ -30,12 +26,6 @@ public class MinesweeperController {
 
 	@Autowired
 	private ScoreService scoreService;
-
-	@Autowired
-	private CommentService commentService;
-
-	@Autowired
-	private RatingService ratingService;
 
 	@Autowired
 	private MainController mainController;
@@ -114,18 +104,6 @@ public class MinesweeperController {
 
 	private long getPlayingSeconds() {
 		return (System.currentTimeMillis() - startMillis) / 1000;
-	}
-
-	public List<Score> getScores() {
-		return scoreService.getTopScores("minesweeper");
-	}
-
-	public List<Comment> getComments() {
-		return commentService.getComments("minesweeper");
-	}
-
-	public double getRating() {
-		return ratingService.getRatingAvg("minesweeper");
 	}
 
 	public String getMineCount() {

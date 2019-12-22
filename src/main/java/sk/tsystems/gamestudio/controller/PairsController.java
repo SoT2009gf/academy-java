@@ -2,21 +2,16 @@ package sk.tsystems.gamestudio.controller;
 
 import java.util.Formatter;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
-import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.game.pairs.core.Field;
 import sk.tsystems.gamestudio.game.pairs.core.State;
 import sk.tsystems.gamestudio.game.pairs.core.Tile;
-import sk.tsystems.gamestudio.service.CommentService;
-import sk.tsystems.gamestudio.service.RatingService;
 import sk.tsystems.gamestudio.service.ScoreService;
 
 @Controller
@@ -30,12 +25,6 @@ public class PairsController {
 
 	@Autowired
 	private ScoreService scoreService;
-
-	@Autowired
-	private CommentService commentService;
-
-	@Autowired
-	private RatingService ratingService;
 
 	@Autowired
 	private MainController mainController;
@@ -83,13 +72,19 @@ public class PairsController {
 							"<a href='/pairs/open?row=%d&column=%d' class='tile secondTile'><img src='/img/pairs/img%d.jpg' alt='Pairs card number %d.'/></a>",
 							row, column, tile.getValue(), tile.getValue());
 				} else if (tile.getState() == State.CLOSED) {
-					formatter.format("<a href='/pairs/open?row=%d&column=%d' class='tile'><img src='/img/pairs/closed.jpg' alt='Pairs card.'/></a>", row, column);
+					formatter.format(
+							"<a href='/pairs/open?row=%d&column=%d' class='tile'><img src='/img/pairs/closed.jpg' alt='Pairs card.'/></a>",
+							row, column);
 				} else if (tile.getState() == State.PAIRED) {
-					formatter.format("<img src='/img/pairs/img%d.jpg' alt='Pairs card number %d.'/>", tile.getValue(), tile.getValue());
+					formatter.format("<img src='/img/pairs/img%d.jpg' alt='Pairs card number %d.'/>", tile.getValue(),
+							tile.getValue());
 				}
 				formatter.format("</div>\n");
 			}
 			formatter.format("</div>\n");
+		}
+		if (isSolved()) {
+			formatter.format("<p>Congratulations, You solved the pairs.</p>\n");
 		}
 		return formatter.toString();
 	}
@@ -100,17 +95,5 @@ public class PairsController {
 
 	private long getPlayingSeconds() {
 		return (System.currentTimeMillis() - startMillis) / 1000;
-	}
-
-	public List<Score> getScores() {
-		return scoreService.getTopScores("pairs");
-	}
-
-	public List<Comment> getComments() {
-		return commentService.getComments("pairs");
-	}
-
-	public double getRating() {
-		return ratingService.getRatingAvg("pairs");
 	}
 }

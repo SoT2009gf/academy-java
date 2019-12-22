@@ -17,8 +17,7 @@ public class RatingServiceJPA implements RatingService {
 	private EntityManager entityManager;
 
 	@Override
-	public void setRating(GameRating rating) {
-		
+	public void setRating(GameRating rating) {		
 		try {
 			GameRating dbRating = (GameRating) entityManager
 					.createQuery("select g from GameRating g where g.game = :game and g.userName = :userName")

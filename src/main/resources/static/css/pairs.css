@@ -1,4 +1,4 @@
-h1 {
+h1, h3 {
 	text-align: center;
 }
 
@@ -19,17 +19,6 @@ a, a:visited {
 a:hover {
 	text-decoration: none;
 	color: #007bff;
-}
-
-a.button {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: initial;
-}
-
-button {
-	cursor: pointer;
 }
 
 .pairs-row {
@@ -62,4 +51,26 @@ textarea {
 .disabled {
    pointer-events: none;
    cursor: default;
+}
+
+.comment {
+	max-width: 100%;
+}
+
+.comment-content {
+	max-width: 100%;
+	text-align: justify;
+	overflow: auto;
+}
+
+.comment-username {
+	max-width: 100;
+}
+
+#comments-heading {
+	margin-top: 1em;
+}
+
+#navigation {
+	text-align: right;
 }

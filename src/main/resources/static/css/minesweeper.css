@@ -1,9 +1,9 @@
 @font-face {
-    font-family: 'digital-7 mono';
-    src: url('/css/fonts/digital-7 (mono).ttf');
+	font-family: 'digital-7 mono';
+	src: url('/css/fonts/digital-7 (mono).ttf');
 }
 
-h1 {
+h1, h3 {
 	text-align: center;
 }
 
@@ -20,17 +20,6 @@ a, a:visited {
 a:hover {
 	text-decoration: none;
 	color: #007bff;
-}
-
-a.button {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: initial;
-}
-
-button {
-	cursor: pointer;
 }
 
 .minesweeper-row {
@@ -86,28 +75,56 @@ textarea {
 	color: red;
 	background-color: black;
 	font-family: 'digital-7 mono';
-	line-height: 1.5em;	
+	line-height: 1.5em;
 	font-size: 1.5em;
-	max-width: 1.5em;	
+	max-width: 1.5em;
 }
 
 .center a {
-	text-decoration:none;
-    display: block;
+	text-decoration: none;
+	display: block;
 }
 
 #smile-icon {
-	margin: 0;
+	display: inline-block;
 	padding: 0;
-	max-width: 2.15em;
+	margin: 0;
 	background-color: #B9B9B9;
-	border: 0.20em outset #B9B9B9;	
+	color: #B9B9B9;
+	border: 0.20em outset #B9B9B9;
+	max-width: 2.15em;
 }
 
 #smile-icon:active {
 	border: 0.20em inset #B9B9B9;
 }
 
+#smile-icon:hover {
+	color: #B9B9B9;;
+}
+
 .mine {
 	background-color: red;
+}
+
+.comment {
+	max-width: 100%;
+}
+
+.comment-content {
+	max-width: 100%;
+	text-align: justify;
+	overflow: auto;
+}
+
+.comment-username {
+	max-width: 100;
+}
+
+#comments-heading {
+	margin-top: 1em;
+}
+
+#navigation {
+	text-align: right;
 }

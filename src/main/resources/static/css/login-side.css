@@ -1,0 +1,58 @@
+#regform-heading {
+	margin-top: 7em;
+	text-align: right;
+}
+
+#changepwd-heading {
+	margin-top: 5em;
+	text-align: right;
+}
+
+#login-question {
+	text-align: right;
+}
+
+#logged-player {
+	text-align: right;
+}
+
+.float-element {
+	max-width: 80%;
+}
+
+.float-button {
+	float: right;
+	max-width: 30%;
+}
+
+#register-top {
+	margin-top: 1em;
+}
+
+#register-button {
+	margin-right: 4.2em;
+}
+
+#create-button {
+	margin-right: 1.75em;
+}
+
+#change-button {
+	margin-right: 1.75em;
+}
+
+.anchor-button {
+	display: inline-block;
+	background-color: ButtonFace;
+	color: ButtonText;
+	padding: 0 0.5em;
+	border: outset 0.15em ButtonFace;
+}
+
+.anchor-button:active {
+	border: inset 0.15em ButtonFace;
+}
+
+.anchor-button:hover {
+	color: ButtonText;
+}

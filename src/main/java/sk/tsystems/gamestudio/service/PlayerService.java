@@ -7,4 +7,6 @@ public interface PlayerService {
 	void addPlayer(Player player);
 	
 	Player getPlayer(String userName);
+	
+	void changePwd(Player player);
 }

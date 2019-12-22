@@ -8,111 +8,32 @@
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="/css/guessthenumber.css" />
+<link rel="stylesheet" href="/css/login-side.css" />
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
 				<header>
-					<h1>
-						<a href="/">Gamestudio</a>
-					</h1>
-					<h2>
-						<a href="/guessthenumber">Guess the Number</a>
-					</h2>
+					<h1>Gamestudio</h1>
+					<h2>Guess the Number</h2>
+					<h3><a href="/guessthenumber">New game</a></h3>
 				</header>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-2 col-12">
-				<aside>
-					<h4>Current player:</h4>
-					<div th:if="${not @mainController.logged}">
-						You are not logged. Please <a href="/">log in</a>.
-					</div>
-					<div th:if="${@mainController.logged}">
-						You are logged as <span
-							th:text="${@mainController.loggedPlayer.name}"></span> <a
-							href="/logout?game=guessthenumber">Log out</a>
-					</div>
-				</aside>
+			<div class="col-md-3 col-12">
+				<nav th:replace="fragments :: navigation('guessthenumber')"></nav>
+				<aside th:replace="fragments :: login-side('guessthenumber')"></aside>
 			</div>
 			<div class="col-md-6 col-12">
 				<main>
-					<div th:if="${not @guessTheNumberController.solved}">
-						<p>I think of the number... Guess which one.</p>
-						<form action="/guessthenumber/guess">
-							<label>I'm guessing it's the number: <input type="text"
-								name="guessedNumber" autofocus></input></label>
-							<button type="submit">Guess</button>
-						</form>
-						<span
-							th:utext="${@guessTheNumberController.guessedNumber} != null ? ${@guessTheNumberController.message}: ''"></span>
-					</div>
-					<div th:if="${@guessTheNumberController.solved}">
-						<p>Congratulations, You guessed right.</p>
-						<span th:text="${@guessTheNumberController.message}"></span>
-					</div>
-
-
-					<div th:if="${@mainController.logged}">
-						<form action="/addcomment" method="post">
-							<input type="hidden" name="game" value="guessthenumber"></input>
-							<label>Add comment (255 chars max):<textarea
-									name="content" rows="3" cols="33"></textarea></label>
-							<button type=submit>Submit</button>
-						</form>
-					</div>
-					<p>Comments:</p>
-					<div th:if="${not @guessTheNumberController.comments.empty}">
-						<ul>
-							<li th:each="comment : ${@guessTheNumberController.comments}"><span
-								th:text="${comment.content}"></span> <span
-								th:text="${comment.userName}"></span></li>
-						</ul>
-					</div>
-					<div th:unless="${not @guessTheNumberController.comments.empty}">
-						<p>No comments yet.</p>
-					</div>
+					<div th:utext="${@guessTheNumberController.HtmlField}"></div>
+					<div th:replace="fragments :: comments('guessthenumber')"></div>
 				</main>
 			</div>
-			<div class="col-md-4 col-12">
-				<aside>
-					<h4>Top scores</h4>
-					<div th:if="${not @guessTheNumberController.scores.empty}">
-						<ol>
-							<li th:each="score : ${@guessTheNumberController.scores}"><span
-								th:text="${score.userName}"></span> <span
-								th:text="${score.value}"></span></li>
-						</ol>
-					</div>
-					<div th:unless="${not @guessTheNumberController.scores.empty}">
-						<p>No top scores yet.</p>
-					</div>
-				</aside>
-				<aside>
-					<h4>Game Rating</h4>
-					<div th:if="${@guessTheNumberController.rating > 0}">
-						<span th:text="${@guessTheNumberController.rating}"></span>
-					</div>
-					<div th:unless="${@guessTheNumberController.rating > 0}">
-						<span>Not rated yet.</span>
-					</div>
-					<div th:if="${@mainController.logged}">
-						<form action="/setrating" method="post">
-							<input type="hidden" name="game" value="guessthenumber"></input>
-							<label>Your rating: <select name="rating">
-									<option value="">Please choose</option>
-									<option value="1">It's terrible</option>
-									<option value="2">I don't like it</option>
-									<option value="3">Can't decide</option>
-									<option value="4">I like it</option>
-									<option value="5">I like it very much</option>
-							</select></label>
-							<button type=submit>Submit</button>
-						</form>
-					</div>
-				</aside>
+			<div class="col-md-3 col-12">
+				<aside th:replace="fragments :: score-side(guessthenumber)"></aside>
 			</div>
 		</div>
 	</div>

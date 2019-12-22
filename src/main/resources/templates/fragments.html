@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>Fragments for gamestudio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav th:fragment="navigation (game)">
+		<div id="navigation">
+			<h4>Navigation</h4>
+			<span><a href="/">Home</a><br /></span> <span
+				th:if="${game} != 'minesweeper'"><a href="/minesweeper">Minesweeper</a><br /></span>
+			<span th:if="${game} != 'puzzle'"><a href="/puzzle">Puzzle</a><br /></span>
+			<span th:if="${game} != 'guessthenumber'"><a
+				href="/guessthenumber">Guess the Number</a><br /></span> <span
+				th:if="${game} != 'pairs'"><a href="/pairs">Pairs</a></span>
+		</div>
+	</nav>
+	<aside th:fragment="login-side (origin)">
+		<div th:if="not ${@mainController.logged}">
+			<h4 id="login-question">Not logged in?</h4>
+			<form action="/login" method="post">
+				<input type="hidden" name="origin" th:value="${origin}" />
+				<div>
+					<div class="float-right float-element">
+						<label>Username: <input type="text" name="name" /></label>
+					</div>
+					<div class="float-right float-element">
+						<label>Password: <input type="password" name="passwd" /></label>
+					</div>
+				</div>
+				<div>
+					<div class="float-button">
+						<button type="submit">Login</button>
+					</div>
+					<div class="float-button" id="register-button">
+						<a th:href="@{'/registerform?origin=' + ${origin}}"
+							class="anchor-button">Register</a>
+					</div>
+				</div>
+			</form>
+			<div th:if="${@mainController.registerFormVisible}">
+				<h4 id="regform-heading">Register form:</h4>
+				<form action="/registernewplayer" method="post">
+					<input type="hidden" name="origin" th:value="${origin}" />
+					<div>
+						<div class="float-right float-element" id="register-top">
+							<label>New username: <input type="text" name="name" />
+							</label>
+						</div>
+						<div class="float-right float-element">
+							<label>Password: <input type="password" name="passwd" />
+							</label>
+						</div>
+					</div>
+					<div id="create-button" class="float-right">
+						<button type="submit">Create new player</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div th:unless="not ${@mainController.logged}">
+			<div>
+				<h4 id="logged-player">
+					You are logged as <span
+						th:text="${@mainController.loggedPlayer.name} + '.'"></span>
+				</h4>
+				<a th:href="@{'/logout?origin=' + ${origin}}"
+					class="anchor-button float-right">Logout</a>
+				<h4 id="changepwd-heading">Change password:</h4>
+				<form action="/changepwd" method="post">
+					<input type="hidden" name="origin" th:value="${origin}" />
+					<div>
+						<div class="float-right float-element">
+							<label>Old password: <input type="password" name="oldpwd" />
+							</label>
+						</div>
+						<div class="float-right float-element">
+							<label>New password: <input type="password" name="newpwd" />
+							</label>
+						</div>
+					</div>
+					<div id="change-button" class="float-right">
+						<button type="submit">Change password</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</aside>
+	<div th:fragment="comments (game)">
+		<div th:if="${@mainController.logged}">
+			<form action="/addcomment" method="post">
+				<input type="hidden" name="game" th:value="${game}" /> <label>Add
+					comment (255 chars max):<textarea name="content" rows="3" cols="33"></textarea>
+				</label>
+				<button type=submit>Submit</button>
+			</form>
+		</div>
+		<h4 id="comments-heading">Comments:</h4>
+		<div th:if="not ${@mainController.comments(game).empty}">
+			<div class="comment"
+				th:each="comment : ${@mainController.comments(game)}">
+				<div class="comment-content" th:text="${comment.content}"></div>
+				<div class="comment-username" th:text="${comment.userName}"></div>
+			</div>
+		</div>
+		<div th:unless="not ${@mainController.comments(game).empty}">
+			<p>No comments yet.</p>
+		</div>
+	</div>
+	<aside th:fragment="score-side (game)">
+		<h4>Top scores</h4>
+		<div th:if="not ${@mainController.scores(game).empty}">
+			<ol>
+				<li th:each="score : ${@mainController.scores(game).scores}"><span
+					th:text="${score.userName}"></span> <span th:text="${score.value}"></span></li>
+			</ol>
+		</div>
+		<div th:unless="not ${@mainController.scores(game).empty}">
+			<p>No top scores yet.</p>
+		</div>
+		<h4>Game Rating</h4>
+		<div th:if="${@mainController.rating(game)} > 0">
+			<p th:text="${@mainController.rating(game)}"></p>
+		</div>
+		<div th:unless="${@mainController.rating(game)} > 0">
+			<p>Not rated yet.</p>
+		</div>
+		<div th:if="${@mainController.logged}">
+			<form action="/setrating" method="post">
+				<input type="hidden" name="game" th:value="${game}" /> <label>Your
+					rating: <select name="rating">
+						<option value="">Please choose</option>
+						<option value="1">It's terrible</option>
+						<option value="2">I don't like it</option>
+						<option value="3">Can't decide</option>
+						<option value="4">I like it</option>
+						<option value="5">I like it very much</option>
+				</select>
+				</label>
+				<button type=submit>Submit</button>
+			</form>
+		</div>
+	</aside>
+</body>
+</html>

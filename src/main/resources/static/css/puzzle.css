@@ -1,4 +1,4 @@
-h1 {
+h1, h3 {
 	text-align: center;
 }
 
@@ -15,17 +15,6 @@ a, a:visited {
 a:hover {
 	text-decoration: none;
 	color: #007bff;
-}
-
-a.button {
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: initial;
-}
-
-button {
-	cursor: pointer;
 }
 
 .puzzle-row {
@@ -46,4 +35,26 @@ img {
 
 textarea {
 	max-width: 77%;
+}
+
+.comment {
+	max-width: 100%;
+}
+
+.comment-content {
+	max-width: 100%;
+	text-align: justify;
+	overflow: auto;
+}
+
+.comment-username {
+	max-width: 100;
+}
+
+#comments-heading {
+	margin-top: 1em;
+}
+
+#navigation {
+	text-align: right;
 }
