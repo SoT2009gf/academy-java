@@ -111,15 +111,15 @@ public class MainController {
 		return registerFormVisible;
 	}
 
-	public List<Score> scores(String game) {
+	public List<Score> getScores(String game) {
 		return scoreService.getTopScores(game);
 	}
 
-	public List<Comment> comments(String game) {
+	public List<Comment> getComments(String game) {
 		return commentService.getComments(game);
 	}
 
-	public double rating(String game) {
+	public double getRating(String game) {
 		return ratingService.getRatingAvg(game);
 	}
 

@@ -23,17 +23,24 @@
 				<aside th:replace="fragments :: login-side('index')"></aside>
 			</div>
 			<div class="col-md-9 col-12">
-				<div id="main-game-links">
-					<div>
-						<a href="/minesweeper"><img src="/img/index/minesweeper.png"
-							alt="Minesweeper game." /></a> <a href="/puzzle"><img
-							src="/img/index/puzzle.jpg" alt="Puzzle game." /></a> <a
-							href="/guessthenumber"><img
-							src="/img/index/guessthenumber.jpg" alt="Guess the number game." /></a>
-						<a href="/pairs"><img src="/img/index/pairs.jpg"
-							alt="Pairs game." /></a>
+				<main>
+					<div id="main-game-links">
+						<div>
+							<a href="/minesweeper"><img src="/img/index/minesweeper.png"
+								alt="Minesweeper game." /></a> <a href="/puzzle"><img
+								src="/img/index/puzzle.jpg" alt="Puzzle game." /></a> <a
+								href="/guessthenumber"><img
+								src="/img/index/guessthenumber.jpg" alt="Guess the number game." /></a>
+							<a href="/pairs"><img src="/img/index/pairs.jpg"
+								alt="Pairs game." /></a>
+						</div>
 					</div>
-				</div>
+				</main>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer th:replace="fragments :: footer"> </footer>
 			</div>
 		</div>
 	</div>

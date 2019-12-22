@@ -97,33 +97,33 @@
 			</form>
 		</div>
 		<h4 id="comments-heading">Comments:</h4>
-		<div th:if="not ${@mainController.comments(game).empty}">
+		<div th:if="not ${@mainController.getComments(game).empty}">
 			<div class="comment"
-				th:each="comment : ${@mainController.comments(game)}">
+				th:each="comment : ${@mainController.getComments(game)}">
 				<div class="comment-content" th:text="${comment.content}"></div>
 				<div class="comment-username" th:text="${comment.userName}"></div>
 			</div>
 		</div>
-		<div th:unless="not ${@mainController.comments(game).empty}">
+		<div th:unless="not ${@mainController.getComments(game).empty}">
 			<p>No comments yet.</p>
 		</div>
 	</div>
 	<aside th:fragment="score-side (game)">
 		<h4>Top scores</h4>
-		<div th:if="not ${@mainController.scores(game).empty}">
+		<div th:if="not ${@mainController.getScores(game).empty}">
 			<ol>
-				<li th:each="score : ${@mainController.scores(game).scores}"><span
+				<li th:each="score : ${@mainController.getScores(game)}"><span
 					th:text="${score.userName}"></span> <span th:text="${score.value}"></span></li>
 			</ol>
 		</div>
-		<div th:unless="not ${@mainController.scores(game).empty}">
+		<div th:unless="not ${@mainController.getScores(game).empty}">
 			<p>No top scores yet.</p>
 		</div>
 		<h4>Game Rating</h4>
-		<div th:if="${@mainController.rating(game)} > 0">
-			<p th:text="${@mainController.rating(game)}"></p>
+		<div th:if="${@mainController.getRating(game)} > 0">
+			<p th:text="${@mainController.getRating(game)}"></p>
 		</div>
-		<div th:unless="${@mainController.rating(game)} > 0">
+		<div th:unless="${@mainController.getRating(game)} > 0">
 			<p>Not rated yet.</p>
 		</div>
 		<div th:if="${@mainController.logged}">
@@ -142,5 +142,15 @@
 			</form>
 		</div>
 	</aside>
+	<footer th:fragment="footer">
+		<h4>Disclaimer</h4>
+		<p>This project was made under guidance of teachers from IT
+			department of Technical University in Kosice in Slovakia as part of
+			T-Systems IT Trainee Development Academy program. Part of this
+			webpage, specifically game Minesweeper, uses proprietary font
+			"Digital-7" from author Alexander Sizenko and for password hashing
+			is used Java implementation of algorithm Scrypt. Webpage is built
+			on frameworks Thymeleaf and Spring with Java as backend.</p>
+	</footer>
 </body>
 </html>

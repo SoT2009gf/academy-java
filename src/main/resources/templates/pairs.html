@@ -17,7 +17,9 @@
 				<header>
 					<h1>Gamestudio</h1>
 					<h2>Pairs</h2>
-					<h3><a href="/pairs">New game</a></h3>
+					<h3>
+						<a href="/pairs">New game</a>
+					</h3>
 				</header>
 			</div>
 		</div>
@@ -34,6 +36,11 @@
 			</div>
 			<div class="col-md-3 col-12">
 				<aside th:replace="fragments :: score-side(pairs)"></aside>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer th:replace="fragments :: footer"> </footer>
 			</div>
 		</div>
 	</div>

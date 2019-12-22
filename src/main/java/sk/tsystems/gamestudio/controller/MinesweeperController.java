@@ -68,7 +68,7 @@ public class MinesweeperController {
 			for (int column = 0; column < field.getColumnCount(); column++) {
 				formatter.format("<div class='minesweeper-column'>\n");
 				Tile tile = field.getTile(row, column);
-				formatter.format("<a href='/minesweeper/open?row=%d&column=%d'class='tile'>", row, column);
+				formatter.format("<a href='/minesweeper/open?row=%d&column=%d' class='tile'>", row, column);
 				formatter.format(getImageName(tile));
 				formatter.format("</a>");
 				formatter.format("</div>\n");
@@ -81,14 +81,14 @@ public class MinesweeperController {
 	private String getImageName(Tile tile) {
 		switch (tile.getState()) {
 		case CLOSED:
-			return "<img src='/img/minesweeper/closed.png'/>";
+			return "<img src='/img/minesweeper/closed.png' alt='Closed tile.'/>";
 		case MARKED:
-			return "<img src='/img/minesweeper/marked.png'/>";
+			return "<img src='/img/minesweeper/marked.png' alt='Marked tile.'/>";
 		case OPEN:
 			if (tile instanceof Clue)
-				return "<img src='/img/minesweeper/open" + ((Clue) tile).getValue() + ".png'/>";
+				return "<img src='/img/minesweeper/open" + ((Clue) tile).getValue() + ".png' alt='Open tile.'/>";
 			else
-				return "<img class='mine' src='/img/minesweeper/mine.png'/>";
+				return "<img class='mine' src='/img/minesweeper/mine.png' alt='Exploded mine.'/>";
 		default:
 			throw new IllegalArgumentException();
 		}

@@ -38,11 +38,11 @@
 											<a href="/minesweeper" id="smile-icon"> <span
 												th:switch="${@minesweeperController.GameState}"> <span
 													th:case="'solved'"> <img
-														src="/img/minesweeper/won.png" alt="Smile icon." />
+														src="/img/minesweeper/won.png" alt="Win smile icon." />
 												</span> <span th:case="'failed'"> <img
-														src="/img/minesweeper/lost.png" alt="Smile icon." />
+														src="/img/minesweeper/lost.png" alt="Lost smile icon." />
 												</span> <span th:case="'playing'"> <img
-														src="/img/minesweeper/smile.png" alt="Smile icon." />
+														src="/img/minesweeper/smile.png" alt="Playing smile icon." />
 												</span>
 											</span>
 											</a>
@@ -59,6 +59,11 @@
 			</div>
 			<div class="col-md-3 col-12">
 				<aside th:replace="fragments :: score-side(minesweeper)"></aside>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer th:replace="fragments :: footer"> </footer>
 			</div>
 		</div>
 	</div>

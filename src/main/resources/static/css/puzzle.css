@@ -48,7 +48,7 @@ textarea {
 }
 
 .comment-username {
-	max-width: 100;
+	max-width: 100%;
 }
 
 #comments-heading {
@@ -57,4 +57,9 @@ textarea {
 
 #navigation {
 	text-align: right;
+}
+
+footer {
+	text-align: center;
+	margin-top: 3em;
 }
