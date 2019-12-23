@@ -43,6 +43,7 @@ public class MainController {
 
 	@RequestMapping
 	public String index() {
+		message = null;
 		return "index";
 	}
 

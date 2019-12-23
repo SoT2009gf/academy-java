@@ -86,7 +86,7 @@
 				</form>
 			</div>
 		</div>
-		<p id="message" th:text="${@mainController.message} != null ? ${@mainController.message} : ''"></p>
+		<p id="message" th:text="${@mainController.message} ? ${@mainController.message} : ''"></p>
 	</aside>
 	<div th:fragment="comments (game)">
 		<div th:if="${@mainController.logged}">
