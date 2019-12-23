@@ -110,12 +110,13 @@ public class MinesweeperController {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
 		return formatter.format("%03d", field.getRemainingMineCount()).toString();
+
 	}
 
 	public String getSeconds() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
-		return formatter.format("%03d", getPlayingSeconds()).toString();
+			return formatter.format("%03d", getPlayingSeconds()).toString();
 	}
 
 	public String getGameState() {
