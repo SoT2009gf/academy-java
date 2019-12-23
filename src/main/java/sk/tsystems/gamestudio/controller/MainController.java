@@ -27,6 +27,8 @@ public class MainController {
 
 	private boolean registerFormVisible;
 
+	private String message;
+
 	@Autowired
 	private PlayerService playerService;
 
@@ -60,22 +62,36 @@ public class MainController {
 					String hash = SCryptUtil.scrypt(player.getPasswd(), 16384, 8, 1);
 					player.setPasswd(hash);
 					playerService.addPlayer(player);
+
 				}
 				loggedPlayer = player;
+				message = "Player created successfully.";
 			}
+		} else {
+			message = "Username must contain more than 6 characters and password must be at least 8 characters long and contain lowercase and uppercase letters and digits.";
 		}
 		return origin;
 	}
 
 	@RequestMapping("/changepwd")
 	public String changePassword(String origin, String oldpwd, String newpwd) {
-		if (checkPasswdConstraints(newpwd)) {
-			String newHash = SCryptUtil.scrypt(newpwd, 16384, 8, 1);
-			Player player = playerService.getPlayer(loggedPlayer.getName());
+		Player player = playerService.getPlayer(loggedPlayer.getName());
+		if (!oldpwd.isBlank() && !newpwd.isBlank()) {
 			if (SCryptUtil.check(oldpwd, player.getPasswd())) {
-				player.setPasswd(newHash);
-				playerService.changePwd(player);
+				String newHash = SCryptUtil.scrypt(newpwd, 16384, 8, 1);
+				if (checkPasswdConstraints(newpwd)) {
+					player.setPasswd(newHash);
+					playerService.changePwd(player);
+					message = "Password changed.";
+					return origin;
+				} else {
+					message = "Password unchanged - new password must be at least 8 characters long and contain lowercase and uppercase letters and digits.";
+				}
+			} else {
+				message = "Password unchanged - old password do not match.";
 			}
+		} else {
+			message = "Password unchanged - one or both input fields empty.";
 		}
 		return origin;
 	}
@@ -86,7 +102,12 @@ public class MainController {
 			Player dbPlayer = playerService.getPlayer(player.getName());
 			if (dbPlayer != null && SCryptUtil.check(player.getPasswd(), dbPlayer.getPasswd())) {
 				loggedPlayer = player;
+				message = "Successfuly logged in.";
+			} else {
+				message = "Invalid username or password.";
 			}
+		} else {
+			message = "Please enter valid username and password.";
 		}
 		return origin;
 	}
@@ -95,7 +116,7 @@ public class MainController {
 	public String logout(String origin) {
 		loggedPlayer = null;
 		registerFormVisible = false;
-
+		message = "Successfully logged out.";
 		return origin;
 	}
 
@@ -150,5 +171,9 @@ public class MainController {
 		}
 
 		return hasDigit && hasLowerCase && hasUpperCase && sizeOk;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }

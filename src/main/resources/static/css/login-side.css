@@ -56,3 +56,9 @@
 .anchor-button:hover {
 	color: ButtonText;
 }
+
+#message {
+	font-size: 0.8em;
+	margin-top: 15em;
+	text-align: right;
+}
