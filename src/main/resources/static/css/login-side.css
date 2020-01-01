@@ -42,19 +42,20 @@
 }
 
 .anchor-button {
-	display: inline-block;
-	background-color: ButtonFace;
-	color: ButtonText;
-	padding: 0 0.5em;
-	border: outset 0.15em ButtonFace;
+	color: white;
 }
 
 .anchor-button:active {
-	border: inset 0.15em ButtonFace;
+	color: white;
 }
 
 .anchor-button:hover {
-	color: ButtonText;
+	color: white; 
+}
+
+
+.anchor-button:visited {
+	color: white;
 }
 
 #message {

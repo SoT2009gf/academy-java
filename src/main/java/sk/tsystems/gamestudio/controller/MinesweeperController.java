@@ -23,6 +23,8 @@ public class MinesweeperController {
 	private Field field;
 
 	private long startMillis;
+	
+	private long seconds;
 
 	@Autowired
 	private ScoreService scoreService;
@@ -34,6 +36,7 @@ public class MinesweeperController {
 	public String index() {
 		field = new Field(9, 9, 10);
 		startMillis = System.currentTimeMillis();
+		seconds = 0;
 		return "minesweeper";
 	}
 
@@ -41,6 +44,7 @@ public class MinesweeperController {
 	public String open(int row, int column) {
 		if (field.getState() == GameState.PLAYING) {
 			field.openTile(row, column);
+			seconds = getPlayingSeconds();
 			if (field.getState() == GameState.SOLVED && mainController.isLogged()) {
 				int scoreValue = (int) (field.getRowCount() * field.getColumnCount() * field.getMineCount() * 3
 						- getPlayingSeconds());
@@ -55,6 +59,7 @@ public class MinesweeperController {
 	public String mark(int row, int column) {
 		if (field.getState() == GameState.PLAYING) {
 			field.markTile(row, column);
+			seconds = getPlayingSeconds();
 		}
 		return "minesweeper";
 	}
@@ -89,6 +94,8 @@ public class MinesweeperController {
 				return "<img src='/img/minesweeper/open" + ((Clue) tile).getValue() + ".png' alt='Open tile.'/>";
 			else
 				return "<img class='mine' src='/img/minesweeper/mine.png' alt='Exploded mine.'/>";
+		case REVEALED:
+			return "<img class='revealed' src='/img/minesweeper/mine.png' alt='Revealed mine.'/>";
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -116,7 +123,7 @@ public class MinesweeperController {
 	public String getSeconds() {
 		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter();
-			return formatter.format("%03d", getPlayingSeconds()).toString();
+		return formatter.format("%03d", seconds).toString();
 	}
 
 	public String getGameState() {

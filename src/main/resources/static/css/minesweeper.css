@@ -100,11 +100,15 @@ textarea {
 }
 
 #smile-icon:hover {
-	color: #B9B9B9;;
+	color: #B9B9B9;
 }
 
 .mine {
 	background-color: red;
+}
+
+.revealed {
+	background-color: #B9B9B9;
 }
 
 .comment {

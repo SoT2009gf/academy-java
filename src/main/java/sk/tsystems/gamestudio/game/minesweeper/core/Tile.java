@@ -12,7 +12,9 @@ public abstract class Tile {
         /** Closed tile. */
         CLOSED,
         /** Marked tile. */
-        MARKED
+        MARKED,
+        /** Revealed tile. */
+        REVEALED
     }
     
     /** Tile state. */

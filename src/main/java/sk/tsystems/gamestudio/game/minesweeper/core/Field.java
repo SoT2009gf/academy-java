@@ -109,6 +109,7 @@ public class Field {
 			tile.setState(Tile.State.OPEN);
 			if (tile instanceof Mine) {
 				state = GameState.FAILED;
+				revealAfterFailure();
 				return;
 			}
 
@@ -255,5 +256,21 @@ public class Field {
 	public int getRemainingMineCount() {
 		int remainingMines = mineCount - getNumberOf(State.MARKED); 
 		return remainingMines >= 0 ? remainingMines : 0;
+	}
+	
+	/**
+	 * Reveals rest of mines on playing field after game failure.
+	 */
+	private void revealAfterFailure() {
+		for(int row = 0; row < rowCount; row++) {
+			for(int column = 0; column < columnCount; column++) {
+				Tile tile = tiles[row][column];
+				if(tile instanceof Mine) {
+					if(tile.getState() == State.CLOSED) {
+						tile.setState(State.REVEALED);
+					}
+				}
+			}
+		}
 	}
 }
