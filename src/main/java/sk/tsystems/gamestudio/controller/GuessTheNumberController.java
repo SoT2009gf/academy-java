@@ -78,7 +78,7 @@ public class GuessTheNumberController {
 			formatter.format("<form action='/guessthenumber/guess'>\n");
 			formatter.format(
 					"<label>I'm guessing it's the number: <input type='text' name='guessedNumber' autofocus/></label>\n");
-			formatter.format("<button type='submit'>Guess</button>\n");
+			formatter.format("<button type='submit' class='btn btn-primary'>Guess</button>\n");
 			formatter.format("</form>\n");
 		}
 		if (guessedNumber != null) {

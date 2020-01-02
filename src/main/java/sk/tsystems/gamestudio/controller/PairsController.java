@@ -84,7 +84,7 @@ public class PairsController {
 			formatter.format("</div>\n");
 		}
 		if (isSolved()) {
-			formatter.format("<p>Congratulations, You solved the pairs.</p>\n");
+			formatter.format("<h4>Congratulations, You solved the pairs.</h4>\n");
 		}
 		return formatter.toString();
 	}

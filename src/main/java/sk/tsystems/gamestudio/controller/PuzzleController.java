@@ -68,7 +68,7 @@ public class PuzzleController {
 			}
 		} else {
 			formatter.format("<img src='/img/puzzle/puzzle.jpg' alt='Solved puzzle image.' />\n");
-			formatter.format("<p>Congratulations, You solved the puzzle.</p>\n");
+			formatter.format("<h4>Congratulations, You solved the puzzle.</h4>\n");
 		}
 		return formatter.toString();
 	}
