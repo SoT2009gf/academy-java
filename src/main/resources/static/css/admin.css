@@ -1,0 +1,28 @@
+h1, h2 {
+	text-align: center;
+}
+
+#player-list {
+	margin-top: 3em;
+	text-align: left;
+}
+
+footer {
+	text-align: center;
+	margin-top: 3em;
+}
+
+.link-caution {
+	color: red; 	
+	background-color:white;
+}
+
+.link-caution:hover {
+	color: white;
+	background-color: red;
+	text-decoration: none;
+}
+
+.link-caution:active {
+	color: white;
+}

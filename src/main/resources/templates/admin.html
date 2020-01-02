@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>Gamestudio - Player list - Admin mode</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="/css/login-side.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Game studio</h1>
+				<hr>
+				<h2>Player list - Admin mode</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 col-12">
+				<aside th:replace="fragments :: login-side('index')"></aside>
+			</div>
+			<div class="col-md-9 col-12">
+				<main>
+					<div id="player-list">
+						<h3>Registered players:</h3>
+						<div th:each="player : ${@adminController.players}">
+							<span th:text="${player.name}"></span> <span><a
+								th:href="@{'/admin/remove?name=' + ${player.name}}"
+								class="link-caution">Remove</a></span>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<footer th:replace="fragments :: footer"> </footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

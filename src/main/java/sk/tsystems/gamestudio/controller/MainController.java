@@ -58,7 +58,7 @@ public class MainController {
 		player.setName(player.getName().trim());
 		player.setPasswd(player.getPasswd().trim());
 		if (!player.getName().isEmpty() && !player.getPasswd().isEmpty()) {
-			if (checkPasswdConstraints(player.getPasswd()) && player.getName().length() >= 6) {
+			if (checkPasswdConstraints(player.getPasswd()) && player.getName().length() >= 5) {
 				if (playerService.getPlayer(player.getName()) == null) {
 					String hash = SCryptUtil.scrypt(player.getPasswd(), 16384, 8, 1);
 					player.setPasswd(hash);
@@ -68,9 +68,9 @@ public class MainController {
 				loggedPlayer = player;
 				message = "Player created successfully.";
 			}
-		} else {
-			message = "Username must contain more than 6 characters and password must be at least 8 characters long and contain lowercase and uppercase letters and digits.";
 		}
+		message = "Username must contain more than 5 characters and password must be at least 8 characters long and contain lowercase and uppercase letters and digits.";
+
 		return origin;
 	}
 
@@ -104,6 +104,9 @@ public class MainController {
 			if (dbPlayer != null && SCryptUtil.check(player.getPasswd(), dbPlayer.getPasswd())) {
 				loggedPlayer = player;
 				message = "Successfuly logged in.";
+				if (player.getName().equals("admin")) {
+					return "redirect:/admin";
+				}
 			} else {
 				message = "Invalid username or password.";
 			}

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import sk.tsystems.gamestudio.entity.Player;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -40,5 +42,21 @@ public class PlayerServiceJPA implements PlayerService {
 			dbPlayer.setPasswd(player.getPasswd());
 		} catch (NoResultException ex) {
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Player> getPlayers() {
+		try {
+			return (List<Player>) entityManager
+					.createQuery("select p from Player p where p.name <> 'admin'").getResultList();					
+		} catch(NoResultException ex) {			
+			return null;
+		}		
+	}
+
+	@Override
+	public void removePlayer(Player player) {
+		entityManager.remove(player);		
 	}
 }
