@@ -1,0 +1,132 @@
+h1, h3 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+	margin-top: 0.5em;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #007bff;
+}
+
+#regform-heading {
+	margin-top: 7em;
+	text-align: right;
+}
+
+#changepwd-heading {
+	margin-top: 5em;
+	text-align: right;
+}
+
+#login-question {
+	text-align: right;
+}
+
+#logged-player {
+	text-align: right;
+}
+
+.float-element {
+	max-width: 80%;
+}
+
+.float-button {
+	float: right;
+	max-width: 30%;
+}
+
+#register-top {
+	margin-top: 1em;
+}
+
+#register-button {
+	margin-right: 4.2em;
+}
+
+#create-button {
+	margin-right: 1.75em;
+}
+
+#change-button {
+	margin-right: 1.75em;
+}
+
+.anchor-button {
+	color: white;
+}
+
+.anchor-button:active {
+	color: white;
+}
+
+.anchor-button:hover {
+	color: white; 
+}
+
+
+.anchor-button:visited {
+	color: white;
+}
+
+#message {
+	font-size: 0.8em;
+	margin-top: 15em;
+	text-align: right;
+}
+
+.comment {
+	max-width: 100%;
+}
+
+.comment-content {
+	max-width: 100%;
+	text-align: justify;
+	overflow: auto;
+}
+
+.comment-username {
+	float: left;
+	max-width: 50%;
+	padding-left: 1em;
+	padding-bottom: 1.5em;
+}
+
+.comment-time {
+	float: left;
+	max-width: 50%;
+	padding-bottom: 1.5em;
+}
+
+#comments-heading {
+	margin-top: 1em;
+}
+
+#navigation {
+	text-align: right;
+}
+
+footer {
+	text-align: center;
+	margin-top: 3em;
+}
+
+#add-comment {
+	display: block;
+	margin-top: 1em;
+	text-align: center;
+}
+
+textarea {
+	display: block;
+	margin: 0 auto;
+	max-width: 90%;
+}
