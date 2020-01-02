@@ -23,7 +23,7 @@ public class CommentController {
 	@RequestMapping
 	public String addComment(String game, String content) {
 		if(!content.isBlank() && content.length() <= 255) {
-			commentService.addComment(new Comment(mainController.getLoggedPlayer().getName(), game, content));
+			commentService.addComment(new Comment(System.currentTimeMillis(), mainController.getLoggedPlayer().getName(), game, content));
 		}
 		return "/" + game;
 	}

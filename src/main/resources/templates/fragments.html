@@ -102,6 +102,7 @@
 			<div class="comment"
 				th:each="comment : ${@mainController.getComments(game)}">
 				<div class="comment-content" th:text="${comment.content}"></div>
+				<div class="comment-time" th:text="${comment.time}"></div>
 				<div class="comment-username" th:text="${comment.userName}"></div>
 			</div>
 		</div>

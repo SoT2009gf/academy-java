@@ -1,5 +1,8 @@
 package sk.tsystems.gamestudio.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +13,8 @@ public class Comment {
 	@Id
 	@GeneratedValue
 	private int ident;
+	
+	private long time;
 
 	private String userName;
 
@@ -19,7 +24,8 @@ public class Comment {
 
 	public Comment() {}
 
-	public Comment(String userName, String game, String content) {
+	public Comment(long time, String userName, String game, String content) {
+		this.time = time;
 		this.userName = userName;
 		this.game = game;
 		this.content = content;
@@ -27,6 +33,12 @@ public class Comment {
 
 	public int getIdent() {
 		return ident;
+	}
+
+	public String getTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+		
+		return sdf.format(new Date(time)).toString();
 	}
 
 	public String getUserName() {
