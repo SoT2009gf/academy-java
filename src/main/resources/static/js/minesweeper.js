@@ -1,21 +1,30 @@
-$(document).ready(function() {
+$(document).ready(bindTiles);
+var url;
+
+function bindTiles() {
 	$(".tile").mousedown(function(event) {
+		event.preventDefault();
 		if (event.which === 3) {
-			let url = $(this).attr("href");
+			url = $(this).attr("href");
 			url = url.replace("open", "mark");
-			window.open(url, "_self");
+			$(".game-field-container").load(url, bindTiles);
 		}
 		if (event.which === 1) {
-			var url = $(this).attr("href");
+			url = $(this).attr("href");
 			let position = url.indexOf("mark");
 			if (position !== -1) {
 				url = url.replace("mark", "open");
-				window.open(url, "_self");
 			}
+			$(".game-field-container").load(url, bindTiles);
 		}
 	});
 
 	$(".tile").contextmenu(function(event) {
 		return false;
 	});
-});
+
+	if ($("#game-won").length) {
+		$("#game-won").remove();
+		window.open("/minesweeper/refresh", "_self");
+	}
+}

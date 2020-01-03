@@ -1,0 +1,24 @@
+<div class="border-outset">
+	<div class="border-solid">
+		<div class="border-inset">
+			<div class="minesweeper-infobar">
+				<div class="info" th:text="${@minesweeperController.mineCount}"></div>
+				<div class="center">
+					<a href="/minesweeper" id="smile-icon"> <span
+						th:switch="${@minesweeperController.GameState}"> <span
+							th:case="'solved'"> <img src="/img/minesweeper/won.png"
+								alt="Win smile icon." />
+						</span> <span th:case="'failed'"> <img
+								src="/img/minesweeper/lost.png" alt="Lost smile icon." />
+						</span> <span th:case="'playing'"> <img
+								src="/img/minesweeper/smile.png" alt="Playing smile icon." />
+						</span>
+					</span>
+					</a>
+				</div>
+				<div class="info" th:text="${@minesweeperController.seconds}"></div>
+			</div>
+			<div id="field" th:utext="${@minesweeperController.HtmlField}"></div>
+		</div>
+	</div>
+</div>

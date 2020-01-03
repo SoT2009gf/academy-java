@@ -27,7 +27,8 @@
 }
 
 #register-top {
-	margin-top: 1em;
+	padding-top: 7em;
+	text-align: right;
 }
 
 #register-button {

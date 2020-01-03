@@ -40,11 +40,11 @@
 				</div>
 			</form>
 			<div th:if="${@mainController.registerFormVisible}">
-				<h4 id="regform-heading">Register form:</h4>
+				<h4 id="register-top">Register form:</h4>
 				<form action="/registernewplayer" method="post">
 					<input type="hidden" name="origin" th:value="${origin}" />
 					<div>
-						<div class="float-right float-element" id="register-top">
+						<div class="float-right float-element">
 							<label>New username: <input type="text" name="name" />
 							</label>
 						</div>

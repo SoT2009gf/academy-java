@@ -2,6 +2,7 @@ package sk.tsystems.gamestudio.controller;
 
 import java.util.Formatter;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ public class MinesweeperController {
 	private long startMillis;
 	
 	private long seconds;
+	
+	boolean victoryMark;
 
 	@Autowired
 	private ScoreService scoreService;
@@ -37,9 +40,15 @@ public class MinesweeperController {
 		field = new Field(9, 9, 10);
 		startMillis = System.currentTimeMillis();
 		seconds = 0;
+		victoryMark = false;
 		return "minesweeper";
 	}
 
+	@RequestMapping("/refresh")
+	public String refresh() {
+		return "minesweeper";
+	}
+	
 	@RequestMapping("/open")
 	public String open(int row, int column) {
 		if (field.getState() == GameState.PLAYING) {
@@ -55,6 +64,12 @@ public class MinesweeperController {
 		return "minesweeper";
 	}
 
+	@RequestMapping("/open-ajax")
+	public String openAjax(int row, int column) {
+		open(row, column);
+		return "minesweeper-field";
+	}
+
 	@RequestMapping("/mark")
 	public String mark(int row, int column) {
 		if (field.getState() == GameState.PLAYING) {
@@ -62,6 +77,12 @@ public class MinesweeperController {
 			seconds = getPlayingSeconds();
 		}
 		return "minesweeper";
+	}
+
+	@RequestMapping("/mark-ajax")
+	public String markAjax(int row, int column) {
+		mark(row, column);
+		return "minesweeper-field";
 	}
 
 	public String getHtmlField() {
@@ -73,12 +94,16 @@ public class MinesweeperController {
 			for (int column = 0; column < field.getColumnCount(); column++) {
 				formatter.format("<div class='minesweeper-column'>\n");
 				Tile tile = field.getTile(row, column);
-				formatter.format("<a href='/minesweeper/open?row=%d&column=%d' class='tile'>", row, column);
+				formatter.format("<a href='/minesweeper/open-ajax?row=%d&column=%d' class='tile'>", row, column);
 				formatter.format(getImageName(tile));
 				formatter.format("</a>");
 				formatter.format("</div>\n");
 			}
 			formatter.format("</div>\n");
+			if(field.getState() == GameState.SOLVED && !victoryMark) {
+				victoryMark = true;
+				formatter.format("<div id='game-won'></div>\n");
+			} 
 		}
 		return formatter.toString();
 	}
