@@ -8,12 +8,11 @@
 	<nav th:fragment="navigation (game)">
 		<div id="navigation">
 			<h4>Navigation</h4>
-			<span><a href="/">Home</a><br /></span> <span
-				th:if="${game} != 'minesweeper'"><a href="/minesweeper">Minesweeper</a><br /></span>
+			<span><a href="/">Home</a><br /></span> 
+			<span th:if="${game} != 'minesweeper'"><a href="/minesweeper">Minesweeper</a><br /></span>
 			<span th:if="${game} != 'puzzle'"><a href="/puzzle">Puzzle</a><br /></span>
-			<span th:if="${game} != 'guessthenumber'"><a
-				href="/guessthenumber">Guess the Number</a><br /></span> <span
-				th:if="${game} != 'pairs'"><a href="/pairs">Pairs</a></span>
+			<span th:if="${game} != 'guessthenumber'"><a href="/guessthenumber">Guess the Number</a><br /></span> 
+			<span th:if="${game} != 'pairs'"><a href="/pairs">Pairs</a></span>
 		</div>
 	</nav>
 	<aside th:fragment="login-side (origin)">
